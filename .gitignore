@@ -14,3 +14,5 @@ art/*.psd
 # macOS
 .DS_Store
 **/.DS_Store
+Data/
+art/
