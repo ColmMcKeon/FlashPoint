@@ -1,0 +1,16 @@
+# Dependencies
+app/node_modules/
+
+# Build output
+app/FlashPoint-darwin-arm64/
+FlashPoint.app/
+
+# Large media (kept locally, not in repo)
+media/
+
+# Source art PSD (optional - uncomment to include)
+art/*.psd
+
+# macOS
+.DS_Store
+**/.DS_Store
