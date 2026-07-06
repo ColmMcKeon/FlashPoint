@@ -1,0 +1,64 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        working-directory: app
+        run: npm install
+      - name: Build macOS universal (arm64 + x64)
+        working-directory: app
+        run: npx electron-packager . FlashPoint --platform=darwin --arch=universal --overwrite --icon=icon.icns
+      - name: Zip
+        run: ditto -c -k --keepParent app/FlashPoint-darwin-universal/FlashPoint.app FlashPoint-mac-universal.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-build
+          path: FlashPoint-mac-universal.zip
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        working-directory: app
+        run: npm install
+      - name: Build Windows x64
+        working-directory: app
+        run: npx electron-packager . FlashPoint --platform=win32 --arch=x64 --overwrite
+      - name: Zip
+        run: Compress-Archive -Path app\FlashPoint-win32-x64 -DestinationPath FlashPoint-windows-x64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: FlashPoint-windows-x64.zip
+
+  release:
+    needs: [build-mac, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/mac-build/FlashPoint-mac-universal.zip
+            artifacts/windows-build/FlashPoint-windows-x64.zip
