@@ -208,7 +208,7 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
       <input type="file" id="fp-music-inp" accept="audio/*" style="display:none;" onchange="fpMusicFileChange(this)">
     </div>
     <div class="lbl" style="margin-bottom:4px;">Auto-advance <span style="color:#9CA3AF;">(0 = manual)</span></div>
-    <div class="fp-row" style="margin-bottom:10px;"><input type="number" id="fp-autorun" value="0" min="0" class="fp-inp" style="width:60px;" onchange="fp.autoRun=Number(this.value)"><span class="lbl">seconds per slide</span></div>
+    <div class="fp-row" style="margin-bottom:10px;"><input type="number" id="fp-autorun" value="0" min="0" class="fp-inp" style="width:60px;"><span class="lbl">seconds per slide</span></div>
     <hr class="fp-divider">
     <div class="fp-row"><button class="fp-btn" style="flex:1;" onclick="document.getElementById('fp-pset').style.display='none'">Close</button><button class="fp-btn on" style="flex:1;" onclick="fpSave();document.getElementById('fp-pset').style.display='none'">Save</button></div>
   </div>
@@ -843,14 +843,14 @@ async function fpLoadFromDisk(){
   if(!window.electronAPI) return false;
   const data=await window.electronAPI.loadData();
   if(!data||!data.slides) return false;
-  fp.slides=data.slides;fp.cur=data.cur||0;fp.nextId=data.nextId||1;fp.title=data.title||'';fp.music=data.music||'';fp.musicData=data.musicData||null;fp.autoRun=data.autoRun||0;
+  fp.slides=data.slides;fp.cur=0;fp.nextId=data.nextId||1;fp.title=data.title||'';fp.music=data.music||'';fp.musicData=data.musicData||null;fp.autoRun=data.autoRun||0;
   return true;
 }
 async function fpLoad(){
   if(!window.electronAPI) return;
   const data=await window.electronAPI.openPresoDialog();
   if(!data||!data.slides) return;
-  fp.slides=data.slides;fp.cur=data.cur||0;fp.nextId=data.nextId||1;fp.title=data.title||'';fp.music=data.music||'';fp.musicData=data.musicData||null;fp.autoRun=data.autoRun||0;
+  fp.slides=data.slides;fp.cur=0;fp.nextId=data.nextId||1;fp.title=data.title||'';fp.music=data.music||'';fp.musicData=data.musicData||null;fp.autoRun=data.autoRun||0;
   document.getElementById('fp-title').value=fp.title;
   document.getElementById('fp-autorun').value=fp.autoRun;
   fpClearPanels();fpRender();markClean();
