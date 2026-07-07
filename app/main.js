@@ -115,7 +115,7 @@ ipcMain.handle('read-file-as-dataurl', async (e, filePath) => {
       ext === 'webp' ? 'image/webp' :
       ext === 'svg'  ? 'image/svg+xml' :
       ext === 'mp4'  ? 'video/mp4'  :
-      ext === 'mov'  ? 'video/quicktime' :
+      ext === 'mov'  ? 'video/mp4' :
       ext === 'webm' ? 'video/webm' :
       ext === 'mp3'  ? 'audio/mpeg' :
       ext === 'wav'  ? 'audio/wav'  :
