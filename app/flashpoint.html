@@ -199,7 +199,7 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
   <div class="pc">
     <div class="fp-row" style="margin-bottom:10px;"><span class="lbl" style="flex:1;">Slide background</span><input type="color" id="fp-bginput" value="#ffffff" style="width:36px;height:28px;padding:2px;border:1px solid var(--panel-border);border-radius:6px;cursor:pointer;" onchange="fpSetBg(this.value)"></div>
     <div class="lbl" style="margin-bottom:4px;">Title</div>
-    <input type="text" id="fp-title" class="fp-inp" style="width:100%;margin-bottom:10px;" placeholder="Untitled" oninput="fp.title=this.value">
+    <input type="text" id="fp-title" class="fp-inp" style="width:100%;margin-bottom:10px;" placeholder="Untitled">
     <div class="lbl" style="margin-bottom:4px;">Background music</div>
     <div class="media-drop-zone" id="fp-music-dz" style="margin-bottom:10px;" ondragover="fpPanelDragOver(event,'fp-music-dz')" ondragleave="fpPanelDragLeave('fp-music-dz')" ondrop="fpMusicDrop(event)">
       <i class="ti ti-music drop-icon" style="font-size:18px;margin-bottom:2px;"></i>
@@ -210,7 +210,7 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
     <div class="lbl" style="margin-bottom:4px;">Auto-advance <span style="color:#9CA3AF;">(0 = manual)</span></div>
     <div class="fp-row" style="margin-bottom:10px;"><input type="number" id="fp-autorun" value="0" min="0" class="fp-inp" style="width:60px;"><span class="lbl">seconds per slide</span></div>
     <hr class="fp-divider">
-    <div class="fp-row"><button class="fp-btn" style="flex:1;" onclick="document.getElementById('fp-pset').style.display='none'">Close</button><button class="fp-btn on" style="flex:1;" onclick="fpSave();document.getElementById('fp-pset').style.display='none'">Save</button></div>
+    <div class="fp-row"><button class="fp-btn" style="flex:1;" onclick="fpShowPres()">Close</button><button class="fp-btn on" style="flex:1;" onclick="fpSave();document.getElementById('fp-pset').style.display='none'">Save</button></div>
   </div>
 </div>
 
@@ -293,7 +293,7 @@ function fpLoadMediaFile(f){
 function fpMusicDrop(e){e.preventDefault();e.stopPropagation();document.getElementById('fp-music-dz').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(!f||!f.type.startsWith('audio/')) return;fpLoadMusicFile(f);}
 function fpMusicFileChange(inp){if(inp.files[0]) fpLoadMusicFile(inp.files[0]);}
 function fpLoadMusicFile(f){
-  function applyMusic(src){fp.musicData=src;fp.music=f.name;const fn=document.getElementById('fp-music-fname');if(fn){fn.textContent=f.name;fn.style.display='block';}fpUpdateAudioBtn();markDirty();}
+  function applyMusic(src){fp._pendingMusicData=src;fp._pendingMusicName=f.name;const fn=document.getElementById('fp-music-fname');if(fn){fn.textContent=f.name+' (unsaved)';fn.style.display='block';}}
   if(f.path&&window.electronAPI){window.electronAPI.readFileAsDataUrl(f.path).then(src=>{if(src)applyMusic(src);});}
   else{const rd=new FileReader();rd.onload=ev=>applyMusic(ev.target.result);rd.readAsDataURL(f);}
 }
@@ -827,13 +827,15 @@ function fpSlideMenu(){const pop=document.getElementById('fp-slide-pop');const i
 function fpJumpSlide(i){fpPopClose();fp.cur=i;fp.selId=null;fpClearPanels();fpRender();}
 function fpPopOutside(e){const sp=document.getElementById('fp-slide-pop'),mp=document.getElementById('fp-move-pop');if(!sp.contains(e.target)&&!mp.contains(e.target))fpPopClose();}
 function fpPlayJumpMenu(){const pop=document.getElementById('fp-slide-pop');const isOpen=pop.style.display==='block';fpPopClose();if(isOpen)return;pop.innerHTML=fp.slides.map((s,i)=>`<div onclick="fp.playIdx=${i};fpRenderPlay();fpPopClose();" style="padding:5px 8px;border-radius:6px;cursor:pointer;font-size:11px;background:${i===fp.playIdx?'var(--accent)':'transparent'};color:${i===fp.playIdx?'#fff':'var(--text)'};display:flex;justify-content:space-between;gap:12px;"><span>Slide ${i+1}</span><span style="opacity:0.6;">${s.objects.length} obj</span></div>`).join('');const bar=document.getElementById('fp-play-bar');const r=bar.getBoundingClientRect();pop.style.left='50%';pop.style.transform='translateX(-50%)';pop.style.top='';pop.style.bottom=(window.innerHeight-r.top+8)+'px';pop.style.display='block';setTimeout(()=>document.addEventListener('click',fpPopOutside,{once:true}),0);}
-function fpShowPres(){const pp=document.getElementById('fp-pset');pp.style.display=pp.style.display==='none'?'block':'none';if(pp.style.display==='block'){pp.style.left='210px';pp.style.top='80px';}document.getElementById('fp-title').value=fp.title;document.getElementById('fp-autorun').value=fp.autoRun;}
+function fpShowPres(){const pp=document.getElementById('fp-pset');pp.style.display=pp.style.display==='none'?'block':'none';if(pp.style.display==='block'){pp.style.left='210px';pp.style.top='80px';document.getElementById('fp-title').value=fp.title;document.getElementById('fp-autorun').value=fp.autoRun;fp._pendingMusicData=null;fp._pendingMusicName=null;const fn=document.getElementById('fp-music-fname');if(fn){fn.textContent=fp.music||'';fn.style.display=fp.music?'block':'none';}}}
 function fpNew(){if(!confirm('New presentation? Unsaved work will be lost.')) return;fp.slides=[{objects:[],bg:'#ffffff'}];fp.cur=0;fp.selId=null;fp.nextId=1;fp.title='';fp.music='';fp.musicData=null;fp.autoRun=0;fpClearPanels();fpRender();fp._dirty=false;if(window.electronAPI)window.electronAPI.setDirty(false);}
 function markDirty(){fp._dirty=true;if(window.electronAPI)window.electronAPI.setDirty(true);clearTimeout(fp._histTimer);fp._histTimer=setTimeout(fpPushHistory,600);}
 function markClean(){fp._dirty=false;if(window.electronAPI) window.electronAPI.setDirty(false);}
 async function fpSave(){
   fp.title=document.getElementById('fp-title').value||fp.title;
   fp.autoRun=Number(document.getElementById('fp-autorun').value);
+  if(fp._pendingMusicData){fp.musicData=fp._pendingMusicData;fp.music=fp._pendingMusicName;fp._pendingMusicData=null;fp._pendingMusicName=null;fpUpdateAudioBtn();markDirty();}
+  if(!fp._dirty) markDirty();
   if(!window.electronAPI) return;
   const data={slides:fp.slides,cur:fp.cur,nextId:fp.nextId,title:fp.title,music:fp.music,musicData:fp.musicData,autoRun:fp.autoRun};
   const ok=await window.electronAPI.saveData(data);
