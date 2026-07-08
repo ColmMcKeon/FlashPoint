@@ -240,9 +240,11 @@ CV().addEventListener('drop',e=>{
   Array.from(e.dataTransfer.files).forEach(f=>fpDropFile(f,x,y));
 });
 
+function fpImageSizeHint(src){const mb=src.length*3/4/1024/1024;if(mb<3)return;const mbs=mb.toFixed(1);const d=document.createElement('div');d.style.cssText='position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:12px 16px;border-radius:10px;font-size:12px;z-index:9999;display:flex;align-items:flex-start;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,0.5);max-width:340px;line-height:1.5;';d.innerHTML='<span style="font-size:18px;margin-top:1px;">⚠️</span><span>This image is <b>'+mbs+' MB</b>. Large images may cause fly-in animations to appear delayed. For best results, use images under 2 MB.</span><button onclick="this.closest(\'div\').remove()" style="background:transparent;border:none;color:#94a3b8;cursor:pointer;font-size:16px;padding:0 0 0 8px;flex-shrink:0;line-height:1;margin-top:1px;">✕</button>';document.body.appendChild(d);setTimeout(()=>{if(d.parentNode)d.remove();},9000);}
+
 function fpDropFile(file,x,y){
   const t=file.type;
-  if(t.startsWith('image/')){const rd=new FileReader();rd.onload=ev=>{const o={id:fp.nextId++,type:'image',x,y,w:200,h:150,src:ev.target.result,fileName:file.name,speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);markDirty();};rd.readAsDataURL(file);}
+  if(t.startsWith('image/')){const rd=new FileReader();rd.onload=ev=>{const o={id:fp.nextId++,type:'image',x,y,w:200,h:150,src:ev.target.result,fileName:file.name,speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);markDirty();fpImageSizeHint(ev.target.result);};rd.readAsDataURL(file);}
   else if(t.startsWith('video/')){const rd=new FileReader();rd.onload=ev=>{const o={id:fp.nextId++,type:'movie',x,y,w:200,h:150,src:ev.target.result,fileName:file.name,speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);};rd.readAsDataURL(file);}
   else if(t.startsWith('audio/')){const rd=new FileReader();rd.onload=ev=>{const o={id:fp.nextId++,type:'sound',x,y,w:160,h:80,src:ev.target.result,fileName:file.name,speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);};rd.readAsDataURL(file);}
 }
@@ -279,7 +281,7 @@ function fpLoadMediaFile(f){
     else if(f.type.startsWith('audio/')) o.type='sound';
     function finish(){const fn=document.getElementById('p'+oid+'-media-fname');if(fn)fn.textContent=f.name;const pp=document.getElementById('fp-pp-'+oid);if(pp)pp.remove();fpRender();fpSelect(oid);}
     const cvW=CV().offsetWidth||800,cvH=CV().offsetHeight||600;
-    if(o.type==='image'){const img=new Image();img.onload=()=>{const sc=Math.min(1,Math.min(cvW*0.8/img.naturalWidth,cvH*0.8/img.naturalHeight));o.w=Math.round(img.naturalWidth*sc);o.h=Math.round(img.naturalHeight*sc);finish();};img.src=src;}
+    if(o.type==='image'){const img=new Image();img.onload=()=>{const sc=Math.min(1,Math.min(cvW*0.8/img.naturalWidth,cvH*0.8/img.naturalHeight));o.w=Math.round(img.naturalWidth*sc);o.h=Math.round(img.naturalHeight*sc);finish();fpImageSizeHint(src);};img.src=src;}
     else if(o.type==='movie'){const vid=document.createElement('video');vid.onloadedmetadata=()=>{const sc=Math.min(1,Math.min(cvW*0.8/vid.videoWidth,cvH*0.8/vid.videoHeight));o.w=Math.round(vid.videoWidth*sc);o.h=Math.round(vid.videoHeight*sc);finish();};vid.onerror=finish;vid.src=src;}
     else finish();
   }
@@ -480,7 +482,7 @@ function fpRenderObj(o){
   OBJS().appendChild(el);
 }
 
-async function fpPickFileForObj(oid,accept){if(window.electronAPI){const paths=await window.electronAPI.openMediaDialog('all');if(!paths||!paths.length) return;const filePath=paths[0];const dataUrl=await window.electronAPI.readFileAsDataUrl(filePath);if(!dataUrl) return;const o=OBJ(oid);if(!o) return;const ext=filePath.split('.').pop().toLowerCase();const isVid=['mp4','mov','webm','avi','m4v'].includes(ext);const isAud=['mp3','wav','ogg','m4a','flac','aac'].includes(ext);o.src=dataUrl;o.fileName=filePath.split('/').pop();if(isVid){o.type='movie';o.w=o.w||200;o.h=o.h||150;}else if(isAud){o.type='sound';o.w=o.w||160;o.h=o.h||80;}else o.type='image';const pp=document.getElementById('fp-pp-'+oid);if(pp)pp.remove();fpRender();fpSelect(oid);}else{const inp=document.createElement('input');inp.type='file';inp.accept=accept;inp.onchange=e=>{const f=e.target.files[0];if(!f) return;const prevSel=fp.selId;fp.selId=oid;fpLoadMediaFile(f);fp.selId=prevSel;};inp.click();}}
+async function fpPickFileForObj(oid,accept){if(window.electronAPI){const paths=await window.electronAPI.openMediaDialog('all');if(!paths||!paths.length) return;const filePath=paths[0];const dataUrl=await window.electronAPI.readFileAsDataUrl(filePath);if(!dataUrl) return;const o=OBJ(oid);if(!o) return;const ext=filePath.split('.').pop().toLowerCase();const isVid=['mp4','mov','webm','avi','m4v'].includes(ext);const isAud=['mp3','wav','ogg','m4a','flac','aac'].includes(ext);o.src=dataUrl;o.fileName=filePath.split('/').pop();if(isVid){o.type='movie';o.w=o.w||200;o.h=o.h||150;}else if(isAud){o.type='sound';o.w=o.w||160;o.h=o.h||80;}else{o.type='image';fpImageSizeHint(dataUrl);}const pp=document.getElementById('fp-pp-'+oid);if(pp)pp.remove();fpRender();fpSelect(oid);}else{const inp=document.createElement('input');inp.type='file';inp.accept=accept;inp.onchange=e=>{const f=e.target.files[0];if(!f) return;const prevSel=fp.selId;fp.selId=oid;fpLoadMediaFile(f);fp.selId=prevSel;};inp.click();}}
 
 function addRH(el,o){const rh=document.createElement('div');rh.style.cssText='position:absolute;right:0;bottom:0;width:16px;height:16px;cursor:se-resize;z-index:5;display:flex;align-items:center;justify-content:center;';rh.innerHTML='<svg width="10" height="10" viewBox="0 0 10 10" fill="rgba(255,255,255,0.6)"><circle cx="8" cy="8" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="8" cy="4" r="2"/></svg>';rh.addEventListener('mousedown',e=>{e.stopPropagation();fp.resizing={id:o.id,sw:o.w||200,sh:o.h||150,sx:e.clientX,sy:e.clientY};});el.appendChild(rh);}
 
