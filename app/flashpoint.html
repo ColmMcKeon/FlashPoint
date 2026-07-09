@@ -94,59 +94,53 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
 .play-stop-btn:hover{background:rgba(255,255,255,0.2);}
 @keyframes fpfade{from{opacity:0}to{opacity:1}}
 /* ── Launch screen ── */
-#fp-launch{position:fixed;inset:0;z-index:5000;background:#0b0b14;display:flex;align-items:center;justify-content:center;}
-#fp-launch.hidden{display:none;}
-#fp-launch-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#16162a 0%,#0b0b14 70%);pointer-events:none;}
-#fp-launch-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:260px;opacity:0.03;pointer-events:none;user-select:none;line-height:1;}
-#fp-launch-card{position:relative;width:480px;background:#13131f;border:1px solid #2a2a40;border-radius:2px;box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 0 1px rgba(99,102,241,0.08);overflow:hidden;}
-#fp-launch-titlebar{background:#0a0a15;border-bottom:1px solid #2a2a40;padding:0 12px;height:34px;display:flex;align-items:center;justify-content:space-between;-webkit-app-region:no-drag;}
-#fp-launch-titlebar-text{font-family:'SF Mono',Monaco,Consolas,monospace;font-size:11px;font-weight:700;letter-spacing:4px;color:#e2e8f0;text-transform:uppercase;}
-#fp-launch-close{background:transparent;border:none;color:#4a4a6a;cursor:pointer;font-size:14px;padding:4px 6px;line-height:1;border-radius:2px;transition:color .15s,background .15s;}
-#fp-launch-close:hover{color:#e2e8f0;background:#1e1e30;}
-#fp-launch-body{display:flex;height:220px;}
-#fp-launch-actions{width:140px;border-right:1px solid #1e1e30;padding:16px 12px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;}
-.fp-launch-btn{width:100%;padding:9px 12px;background:#1a1a2a;border:1px solid #2a2a3e;border-radius:2px;color:#c4c4d4;font-size:12px;font-family:inherit;cursor:pointer;text-align:left;transition:background .12s,border-color .12s,color .12s;letter-spacing:0.3px;}
-.fp-launch-btn:hover{background:#1e1e38;border-color:#6366f1;color:#e2e8f0;}
-.fp-launch-btn.primary{background:#1e1e3f;border-color:#4f52d3;color:#a5b4fc;}
-.fp-launch-btn.primary:hover{background:#252550;border-color:#6366f1;color:#c7d2fe;}
-#fp-launch-recent{flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
-#fp-launch-recent::-webkit-scrollbar{width:3px;}
-#fp-launch-recent::-webkit-scrollbar-thumb{background:#2a2a40;border-radius:2px;}
-#fp-launch-recent-hdr{font-size:9px;font-weight:700;letter-spacing:2px;color:#3a3a5a;text-transform:uppercase;padding:2px 4px 8px;flex-shrink:0;}
-.fp-launch-recent-item{padding:7px 8px;border-radius:2px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .1s;border:1px solid transparent;}
-.fp-launch-recent-item:hover{background:#1a1a2e;border-color:#2a2a40;}
-.fp-launch-recent-name{font-size:11px;color:#a0a0c0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.fp-launch-recent-item:hover .fp-launch-recent-name{color:#e2e8f0;}
-.fp-launch-recent-date{font-size:9px;color:#3a3a5a;flex-shrink:0;}
-#fp-launch-empty{font-size:11px;color:#2e2e4a;padding:20px 4px;text-align:center;line-height:1.6;}
-#fp-launch-footer{border-top:1px solid #1a1a28;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;}
-#fp-launch-version{font-size:9px;color:#2a2a42;letter-spacing:1px;}
-#fp-launch-tagline{font-size:9px;color:#2a2a42;letter-spacing:0.5px;}
+#launch-screen{position:fixed;inset:0;z-index:5000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+#launch-screen.hidden{display:none;}
+#launch-logo{font-size:44px;margin-bottom:8px;}
+#launch-title{font-size:26px;font-weight:700;color:var(--text);letter-spacing:4px;margin-bottom:4px;}
+#launch-subtitle{font-size:11px;color:var(--text-sec);letter-spacing:2px;margin-bottom:28px;text-transform:uppercase;}
+#launch-cancel-btn{display:none;position:fixed;top:44px;right:20px;background:#fff;border:1px solid var(--panel-border);border-radius:50%;width:34px;height:34px;color:var(--text);font-size:16px;line-height:1;cursor:pointer;align-items:center;justify-content:center;z-index:5001;}
+#launch-cancel-btn:hover{border-color:var(--accent);color:var(--accent);}
+#launch-card{background:#fff;border:1px solid var(--panel-border);border-radius:12px;padding:24px 28px;width:380px;box-shadow:0 4px 20px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px;}
+#launch-card-title{font-size:10px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;}
+#launch-list{display:flex;flex-direction:column;gap:4px;max-height:210px;overflow-y:auto;}
+#launch-list::-webkit-scrollbar{width:4px;}
+#launch-list::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:4px;}
+#launch-empty{font-size:12px;color:var(--text-sec);padding:12px 4px;text-align:center;}
+.preso-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:#F9FAFB;border:1.5px solid transparent;cursor:pointer;transition:background .12s,border-color .12s;font-size:12px;}
+.preso-item:hover{border-color:var(--panel-border);}
+.preso-item-icon{font-size:15px;color:var(--text-sec);flex-shrink:0;}
+.preso-item-name{flex:1;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);}
+.preso-item-meta{font-size:10px;color:var(--text-sec);flex-shrink:0;}
+.preso-del{opacity:0;background:none;border:none;color:var(--text-sec);cursor:pointer;font-size:12px;padding:2px 4px;border-radius:4px;transition:opacity .12s,color .12s;flex-shrink:0;}
+.preso-item:hover .preso-del{opacity:1;}
+.preso-del:hover{color:var(--danger);}
+#launch-divider{border:none;border-top:1px solid var(--panel-border);margin:4px 0;}
+#launch-new-row{display:flex;gap:8px;}
+#launch-new-input{flex:1;padding:9px 12px;border-radius:8px;background:#F9FAFB;border:1px solid var(--panel-border);color:var(--text);font-size:12px;outline:none;font-family:inherit;}
+#launch-new-input::placeholder{color:var(--text-sec);}
+#launch-new-input:focus{border-color:var(--accent);}
+#launch-create-btn{padding:9px 14px;border-radius:8px;background:var(--accent-lt);border:1px solid var(--accent);color:var(--accent);font-size:12px;cursor:pointer;font-family:inherit;white-space:nowrap;font-weight:600;transition:background .15s;}
+#launch-create-btn:hover{background:#e0e7ff;}
+#launch-open-btn{padding:9px 12px;border-radius:8px;background:#F9FAFB;border:1px solid var(--panel-border);color:var(--text-sec);font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;}
+#launch-open-btn:hover{border-color:var(--accent);color:var(--accent);}
 </style>
 </head>
 <body>
-<div id="fp-launch">
-  <div id="fp-launch-bg"></div>
-  <div id="fp-launch-logo">⚡</div>
-  <div id="fp-launch-card">
-    <div id="fp-launch-titlebar">
-      <span id="fp-launch-titlebar-text">Flash Point</span>
-      <button id="fp-launch-close" onclick="fpHideLaunch()" title="Skip">✕</button>
+<div id="launch-screen">
+  <div id="launch-logo">⚡</div>
+  <div id="launch-title">FLASHPOINT</div>
+  <div id="launch-subtitle">Presentation Builder</div>
+  <button id="launch-cancel-btn">✕</button>
+  <div id="launch-card">
+    <div id="launch-card-title">Select a Presentation</div>
+    <div id="launch-list"><div id="launch-empty">No presentations yet — create one below.</div></div>
+    <hr id="launch-divider"/>
+    <div id="launch-new-row">
+      <input type="text" id="launch-new-input" placeholder="New presentation name…"/>
+      <button id="launch-create-btn">+ Create</button>
     </div>
-    <div id="fp-launch-body">
-      <div id="fp-launch-actions">
-        <button class="fp-launch-btn primary" onclick="fpLaunchNew()">New</button>
-        <button class="fp-launch-btn" onclick="fpLaunchOpen()">Open...</button>
-      </div>
-      <div id="fp-launch-recent">
-        <div id="fp-launch-recent-hdr">Presentations</div>
-        <div id="fp-launch-recent-list"></div>
-      </div>
-    </div>
-    <div id="fp-launch-footer">
-      <span id="fp-launch-version">v1.0.0</span>
-      <span id="fp-launch-tagline">inspired by Flash — 2004</span>
-    </div>
+    <button id="launch-open-btn">📂 Open from file…</button>
   </div>
 </div>
 <div id="fp">
@@ -952,8 +946,7 @@ async function fpLoad(){
   const data=await window.electronAPI.openPresoDialog();
   if(!data||!data.slides) return;
   fpApplyLoadedData(data);
-  if(data._path) fpAddRecent(fp.title||data._path.split('/').pop().replace(/\.fpx$/i,''),data._path);
-  fpHideLaunch();
+  if(window.fpHideLaunch) fpHideLaunch();
 }
 function fpApplyLoadedData(data){
   fp.slides=data.slides;fp.cur=0;fp.nextId=data.nextId||1;fp.title=data.title||'';fp.music=data.music||'';fp.musicData=data.musicData||null;fp.autoRun=data.autoRun||0;
@@ -963,28 +956,68 @@ function fpApplyLoadedData(data){
 }
 
 // ── Launch screen ──
-function fpHideLaunch(){document.getElementById('fp-launch').classList.add('hidden');}
-function fpShowLaunch(){fpRenderRecents();document.getElementById('fp-launch').classList.remove('hidden');}
-function fpLaunchNew(){fpHideLaunch();}
-async function fpLaunchOpen(){await fpLoad();}
-async function fpLaunchOpenRecent(path,name){
-  if(!window.electronAPI) return;
-  const data=await window.electronAPI.openFileByPath(path);
-  if(!data||!data.slides){fpRemoveRecent(path);fpRenderRecents();return;}
-  fpApplyLoadedData(data);
-  fpAddRecent(name,path);
-  fpHideLaunch();
-}
-function fpAddRecent(){}
-function fpRemoveRecent(){}
-async function fpRenderRecents(){
-  const list=document.getElementById('fp-launch-recent-list');if(!list)return;
-  if(!window.electronAPI){list.innerHTML='<div id="fp-launch-empty">No presentations found.</div>';return;}
-  const items=await window.electronAPI.listPresentations();
-  if(!items||!items.length){list.innerHTML='<div id="fp-launch-empty">No presentations yet.<br>Click New to create one.</div>';return;}
-  const fmt=ts=>{const d=new Date(ts),now=new Date(),diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});};
-  list.innerHTML=items.map(x=>`<div class="fp-launch-recent-item" onclick="fpLaunchOpenRecent(${JSON.stringify(x.path)},${JSON.stringify(x.name)})"><span class="fp-launch-recent-name" title="${x.path}">${x.name}</span><span class="fp-launch-recent-date">${fmt(x.mtime)}</span></div>`).join('');
-}
+(()=>{
+  const screen=document.getElementById('launch-screen');
+  const list=document.getElementById('launch-list');
+  const newInput=document.getElementById('launch-new-input');
+  const createBtn=document.getElementById('launch-create-btn');
+  const cancelBtn=document.getElementById('launch-cancel-btn');
+  const openBtn=document.getElementById('launch-open-btn');
+
+  function hideLaunch(){screen.classList.add('hidden');}
+  window.fpHideLaunch=hideLaunch;
+
+  cancelBtn.addEventListener('click',()=>hideLaunch());
+
+  async function refreshList(){
+    if(!window.electronAPI){list.innerHTML='<div id="launch-empty">No presentations yet — create one below.</div>';return;}
+    const items=await window.electronAPI.listPresentations();
+    if(!items||!items.length){list.innerHTML='<div id="launch-empty">No presentations yet — create one below.</div>';return;}
+    const fmt=ts=>{const d=new Date(ts),now=new Date(),diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});};
+    list.innerHTML='';
+    items.forEach(x=>{
+      const el=document.createElement('div');
+      el.className='preso-item';
+      el.innerHTML=`<span class="preso-item-icon">⚡</span><span class="preso-item-name"></span><span class="preso-item-meta">${fmt(x.mtime)}</span><button class="preso-del" title="Delete">✕</button>`;
+      el.querySelector('.preso-item-name').textContent=x.name;
+      el.addEventListener('click',async e=>{
+        if(e.target.closest('.preso-del'))return;
+        const data=await window.electronAPI.openFileByPath(x.path);
+        if(!data||!data.slides){refreshList();return;}
+        fpApplyLoadedData(data);hideLaunch();
+      });
+      el.querySelector('.preso-del').addEventListener('click',async e=>{
+        e.stopPropagation();
+        if(!confirm('Delete "'+x.name+'"?'))return;
+        await window.electronAPI.deletePresentation(x.path);
+        refreshList();
+      });
+      list.appendChild(el);
+    });
+  }
+
+  async function showLaunch(){
+    newInput.value='';
+    cancelBtn.style.display=fp.slides&&fp.slides[0]&&fp.slides[0].objects&&fp.slides[0].objects.length?'flex':'none';
+    screen.classList.remove('hidden');
+    await refreshList();
+  }
+  window.fpShowLaunch=showLaunch;
+  window.fpRenderRecents=refreshList;
+
+  createBtn.addEventListener('click',()=>{
+    const name=newInput.value.trim();
+    if(!name){newInput.focus();return;}
+    fp.title=name;
+    document.getElementById('fp-title').value=name;
+    hideLaunch();
+  });
+  newInput.addEventListener('keydown',e=>{if(e.key==='Enter')createBtn.click();});
+
+  openBtn.addEventListener('click',async()=>{
+    await fpLoad();
+  });
+})();
 function fpTogglePlay(){fp.playing=!fp.playing;const modeEl=document.getElementById('fp-mode'),playBtn=document.getElementById('fp-play-btn');if(fp.playing){fp.playIdx=0;fp._prePlaySelId=fp.selId;fp._prePlayCur=fp.cur;playBtn.classList.add('on');modeEl.textContent='PLAY';modeEl.classList.add('play');document.getElementById('fp-tb').style.display='none';document.getElementById('fp-cv-wrap').style.left='0';document.getElementById('fp-bot').style.left='0';document.getElementById('fp-bot').style.display='none';document.getElementById('fp-rp').style.display='none';document.getElementById('fp-play-ov').style.display='block';if(fp.musicData){fp.bgAudio=new Audio(fp.musicData);fp.bgAudio.loop=true;fp.bgAudio.play().catch(()=>{});}fpRenderPlay();}else{clearInterval(fp.autoTimer);fp.autoTimer=null;if(fp.bgAudio){fp.bgAudio.pause();fp.bgAudio=null;}playBtn.classList.remove('on');modeEl.textContent='EDIT MODE';modeEl.classList.remove('play');document.getElementById('fp-play-ov').style.display='none';document.getElementById('fp-tb').style.display='flex';document.getElementById('fp-cv-wrap').style.left='200px';document.getElementById('fp-bot').style.left='200px';document.getElementById('fp-bot').style.display='flex';document.getElementById('fp-rp').style.display='flex';fp.cur=fp.playIdx;fpClearPanels();fpRender();if(fp._prePlayCur===fp.cur&&fp._prePlaySelId!=null&&OBJ(fp._prePlaySelId)){fpSelect(fp._prePlaySelId);}else{fp.selId=null;fpRpClear();}}}
 function fpPlayNext(){fp.playIdx++;if(fp.playIdx>=fp.slides.length){fpTogglePlay();return;}fpRenderPlay();}
 function fpPlayPrev(){if(fp.playIdx>0){fp.playIdx--;fpRenderPlay();}}
@@ -1039,7 +1072,7 @@ document.addEventListener('input',e=>{if(e.target.contentEditable==='true') mark
   fpRender();
   fpUpdateAudioBtn();
   markClean();
-  fpRenderRecents();
+  if(window.fpShowLaunch) fpShowLaunch();
 })();
 </script>
 </body>

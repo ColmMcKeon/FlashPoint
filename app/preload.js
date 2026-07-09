@@ -8,7 +8,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onSaveAndQuit:     (cb)       => ipcRenderer.on('save-and-quit', cb),
   openPresoDialog:   ()         => ipcRenderer.invoke('open-preso-dialog'),
   openFileByPath:    (filePath) => ipcRenderer.invoke('open-file-by-path', filePath),
-  listPresentations: ()         => ipcRenderer.invoke('list-presentations'),
+  listPresentations:    ()           => ipcRenderer.invoke('list-presentations'),
+  deletePresentation:   (filePath)   => ipcRenderer.invoke('delete-presentation', filePath),
   openMediaDialog:   (type)     => ipcRenderer.invoke('open-media-dialog', type),
   readFileAsDataUrl: (filePath) => ipcRenderer.invoke('read-file-as-dataurl', filePath),
 });

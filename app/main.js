@@ -87,6 +87,11 @@ ipcMain.handle('open-preso-dialog', async () => {
   } catch { return null; }
 });
 
+// Delete a presentation file
+ipcMain.handle('delete-presentation', (e, filePath) => {
+  try { fs.unlinkSync(filePath); return true; } catch { return false; }
+});
+
 // List all .fpx files in the data directory
 ipcMain.handle('list-presentations', () => {
   try {
