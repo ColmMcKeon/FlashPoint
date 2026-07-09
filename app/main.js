@@ -102,17 +102,12 @@ let currentSavePath = null;
 ipcMain.handle('save-data', async (e, data) => {
   try {
     if (!currentSavePath) {
-      const result = await dialog.showSaveDialog(mainWindow, {
-        title: 'Save Presentation',
-        defaultPath: path.join(os.homedir(), 'Documents', (data.title || 'Untitled') + '.fpx'),
-        filters: [{ name: 'FlashPoint Presentation', extensions: ['fpx'] }, { name: 'All Files', extensions: ['*'] }],
-      });
-      if (result.canceled || !result.filePath) return false;
-      currentSavePath = result.filePath;
+      if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+      currentSavePath = path.join(DATA_DIR, (data.title || 'Untitled') + '.fpx');
     }
     fs.writeFileSync(currentSavePath, JSON.stringify(data, null, 2), 'utf8');
-    return true;
-  } catch (e) { return false; }
+    return currentSavePath;
+  } catch (e) { return null; }
 });
 
 // Read a local file as base64 data URL (for native file picker)

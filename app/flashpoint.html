@@ -937,8 +937,8 @@ async function fpSave(){
   if(!fp._dirty) markDirty();
   if(!window.electronAPI) return;
   const data={slides:fp.slides,cur:fp.cur,nextId:fp.nextId,title:fp.title,music:fp.music,musicData:fp.musicData,autoRun:fp.autoRun};
-  const ok=await window.electronAPI.saveData(data);
-  if(ok) markClean();
+  const savedPath=await window.electronAPI.saveData(data);
+  if(savedPath){markClean();fpAddRecent(fp.title||'Untitled',savedPath);}
 }
 async function fpLoadFromDisk(){
   if(!window.electronAPI) return false;
