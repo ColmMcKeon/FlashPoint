@@ -1000,11 +1000,16 @@ function fpApplyLoadedData(data){
   window.fpShowLaunch=showLaunch;
   window.fpRenderRecents=refreshList;
 
-  createBtn.addEventListener('click',()=>{
+  createBtn.addEventListener('click',async()=>{
     const name=newInput.value.trim();
     if(!name){newInput.focus();return;}
-    fp.title=name;
+    if(window.electronAPI) await window.electronAPI.newPresentation();
+    fp.slides=[{objects:[],bg:'#ffffff'}];fp.cur=0;fp.nextId=1;
+    fp.title=name;fp.music='';fp.musicData=null;fp.autoRun=0;fp.selId=null;
+    fp._pendingMusicData=null;fp._pendingMusicName=null;
     document.getElementById('fp-title').value=name;
+    document.getElementById('fp-autorun').value=0;
+    fpClearPanels();fpRender();markClean();
     hideLaunch();
   });
   newInput.addEventListener('keydown',e=>{if(e.key==='Enter')createBtn.click();});

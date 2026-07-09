@@ -87,6 +87,9 @@ ipcMain.handle('open-preso-dialog', async () => {
   } catch { return null; }
 });
 
+// Clear the current save path (for new presentations)
+ipcMain.handle('new-presentation', () => { currentSavePath = null; return true; });
+
 // Delete a presentation file
 ipcMain.handle('delete-presentation', (e, filePath) => {
   try { fs.unlinkSync(filePath); return true; } catch { return false; }

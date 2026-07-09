@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFileByPath:    (filePath) => ipcRenderer.invoke('open-file-by-path', filePath),
   listPresentations:    ()           => ipcRenderer.invoke('list-presentations'),
   deletePresentation:   (filePath)   => ipcRenderer.invoke('delete-presentation', filePath),
+  newPresentation:      ()           => ipcRenderer.invoke('new-presentation'),
   openMediaDialog:   (type)     => ipcRenderer.invoke('open-media-dialog', type),
   readFileAsDataUrl: (filePath) => ipcRenderer.invoke('read-file-as-dataurl', filePath),
 });
