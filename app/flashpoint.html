@@ -733,10 +733,7 @@ function fpMTab(oid,t){['media','align','motion'].forEach(n=>{const tc=document.
 function fpDTab(oid,t){['style','motion'].forEach(n=>{const tc=document.getElementById('p'+oid+'-dc-'+n),tt=document.getElementById('p'+oid+'-dt-'+n);if(tc)tc.style.display=n===t?'block':'none';if(tt)tt.className='ptab'+(n===t?' on':'');});}
 function fpSetMotionVal(field,val){
   const o=OBJ(fp.selId);if(!o)return;
-  if(val===''||val===null){
-    if(field==='sx'||field==='sy'){delete o.startX;delete o.startY;}
-    else{delete o.endX;delete o.endY;}
-  }else{
+  if(val===''||val===null){return;}else{
     const v=parseFloat(val);if(isNaN(v))return;
     if(field==='sx'){o.startX=v;if(o.startY===undefined)o.startY=o.y;}
     else if(field==='sy'){o.startY=v;if(o.startX===undefined)o.startX=o.x;}
