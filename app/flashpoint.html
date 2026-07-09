@@ -291,7 +291,7 @@ CV().addEventListener('drop',e=>{
 
 function fpMediaSizeHint(src,type,oid){
   const mb=src.length*3/4/1024/1024;
-  const threshold=type==='image'?3:type==='movie'?15:5;
+  const threshold=type==='image'?3:type==='movie'?20:5;
   if(mb<threshold)return;
   const mbs=mb.toFixed(1);
   const isImg=type==='image';
