@@ -81,7 +81,19 @@ ipcMain.handle('open-preso-dialog', async () => {
   if (result.canceled || !result.filePaths.length) return null;
   try {
     currentSavePath = result.filePaths[0];
-    return JSON.parse(fs.readFileSync(currentSavePath, 'utf8'));
+    const data = JSON.parse(fs.readFileSync(currentSavePath, 'utf8'));
+    data._path = currentSavePath;
+    return data;
+  } catch { return null; }
+});
+
+// Open a presentation directly by path (for recent files)
+ipcMain.handle('open-file-by-path', async (e, filePath) => {
+  try {
+    currentSavePath = filePath;
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    data._path = filePath;
+    return data;
   } catch { return null; }
 });
 

@@ -93,9 +93,62 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
 .play-stop-btn{font-size:11px;padding:4px 12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#fff;cursor:pointer;}
 .play-stop-btn:hover{background:rgba(255,255,255,0.2);}
 @keyframes fpfade{from{opacity:0}to{opacity:1}}
+/* ── Launch screen ── */
+#fp-launch{position:fixed;inset:0;z-index:5000;background:#0b0b14;display:flex;align-items:center;justify-content:center;}
+#fp-launch.hidden{display:none;}
+#fp-launch-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#16162a 0%,#0b0b14 70%);pointer-events:none;}
+#fp-launch-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:260px;opacity:0.03;pointer-events:none;user-select:none;line-height:1;}
+#fp-launch-card{position:relative;width:480px;background:#13131f;border:1px solid #2a2a40;border-radius:2px;box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 0 1px rgba(99,102,241,0.08);overflow:hidden;}
+#fp-launch-titlebar{background:#0a0a15;border-bottom:1px solid #2a2a40;padding:0 12px;height:34px;display:flex;align-items:center;justify-content:space-between;-webkit-app-region:no-drag;}
+#fp-launch-titlebar-text{font-family:'SF Mono',Monaco,Consolas,monospace;font-size:11px;font-weight:700;letter-spacing:4px;color:#e2e8f0;text-transform:uppercase;}
+#fp-launch-close{background:transparent;border:none;color:#4a4a6a;cursor:pointer;font-size:14px;padding:4px 6px;line-height:1;border-radius:2px;transition:color .15s,background .15s;}
+#fp-launch-close:hover{color:#e2e8f0;background:#1e1e30;}
+#fp-launch-body{display:flex;height:220px;}
+#fp-launch-actions{width:140px;border-right:1px solid #1e1e30;padding:16px 12px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;}
+.fp-launch-btn{width:100%;padding:9px 12px;background:#1a1a2a;border:1px solid #2a2a3e;border-radius:2px;color:#c4c4d4;font-size:12px;font-family:inherit;cursor:pointer;text-align:left;transition:background .12s,border-color .12s,color .12s;letter-spacing:0.3px;}
+.fp-launch-btn:hover{background:#1e1e38;border-color:#6366f1;color:#e2e8f0;}
+.fp-launch-btn.primary{background:#1e1e3f;border-color:#4f52d3;color:#a5b4fc;}
+.fp-launch-btn.primary:hover{background:#252550;border-color:#6366f1;color:#c7d2fe;}
+#fp-launch-recent{flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
+#fp-launch-recent::-webkit-scrollbar{width:3px;}
+#fp-launch-recent::-webkit-scrollbar-thumb{background:#2a2a40;border-radius:2px;}
+#fp-launch-recent-hdr{font-size:9px;font-weight:700;letter-spacing:2px;color:#3a3a5a;text-transform:uppercase;padding:2px 4px 8px;flex-shrink:0;}
+.fp-launch-recent-item{padding:7px 8px;border-radius:2px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .1s;border:1px solid transparent;}
+.fp-launch-recent-item:hover{background:#1a1a2e;border-color:#2a2a40;}
+.fp-launch-recent-name{font-size:11px;color:#a0a0c0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fp-launch-recent-item:hover .fp-launch-recent-name{color:#e2e8f0;}
+.fp-launch-recent-date{font-size:9px;color:#3a3a5a;flex-shrink:0;}
+#fp-launch-empty{font-size:11px;color:#2e2e4a;padding:20px 4px;text-align:center;line-height:1.6;}
+#fp-launch-footer{border-top:1px solid #1a1a28;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;}
+#fp-launch-version{font-size:9px;color:#2a2a42;letter-spacing:1px;}
+#fp-launch-tagline{font-size:9px;color:#2a2a42;letter-spacing:0.5px;}
 </style>
 </head>
 <body>
+<div id="fp-launch">
+  <div id="fp-launch-bg"></div>
+  <div id="fp-launch-logo">⚡</div>
+  <div id="fp-launch-card">
+    <div id="fp-launch-titlebar">
+      <span id="fp-launch-titlebar-text">Flash Point</span>
+      <button id="fp-launch-close" onclick="fpHideLaunch()" title="Skip">✕</button>
+    </div>
+    <div id="fp-launch-body">
+      <div id="fp-launch-actions">
+        <button class="fp-launch-btn primary" onclick="fpLaunchNew()">New</button>
+        <button class="fp-launch-btn" onclick="fpLaunchOpen()">Open...</button>
+      </div>
+      <div id="fp-launch-recent">
+        <div id="fp-launch-recent-hdr">Open Recent</div>
+        <div id="fp-launch-recent-list"></div>
+      </div>
+    </div>
+    <div id="fp-launch-footer">
+      <span id="fp-launch-version">v1.0.0</span>
+      <span id="fp-launch-tagline">inspired by Flash — 2004</span>
+    </div>
+  </div>
+</div>
 <div id="fp">
 <div id="fp-tb">
   <div id="fp-tools">
@@ -898,10 +951,39 @@ async function fpLoad(){
   if(!window.electronAPI) return;
   const data=await window.electronAPI.openPresoDialog();
   if(!data||!data.slides) return;
+  fpApplyLoadedData(data);
+  if(data._path) fpAddRecent(fp.title||data._path.split('/').pop().replace(/\.fpx$/i,''),data._path);
+  fpHideLaunch();
+}
+function fpApplyLoadedData(data){
   fp.slides=data.slides;fp.cur=0;fp.nextId=data.nextId||1;fp.title=data.title||'';fp.music=data.music||'';fp.musicData=data.musicData||null;fp.autoRun=data.autoRun||0;
   document.getElementById('fp-title').value=fp.title;
   document.getElementById('fp-autorun').value=fp.autoRun;
   fpClearPanels();fpRender();markClean();
+}
+
+// ── Launch screen ──
+function fpHideLaunch(){document.getElementById('fp-launch').classList.add('hidden');}
+function fpShowLaunch(){fpRenderRecents();document.getElementById('fp-launch').classList.remove('hidden');}
+function fpLaunchNew(){fpHideLaunch();}
+async function fpLaunchOpen(){await fpLoad();}
+async function fpLaunchOpenRecent(path,name){
+  if(!window.electronAPI) return;
+  const data=await window.electronAPI.openFileByPath(path);
+  if(!data||!data.slides){fpRemoveRecent(path);fpRenderRecents();return;}
+  fpApplyLoadedData(data);
+  fpAddRecent(name,path);
+  fpHideLaunch();
+}
+function fpGetRecents(){try{return JSON.parse(localStorage.getItem('fp-recents')||'[]');}catch{return[];}}
+function fpAddRecent(name,path){let r=fpGetRecents().filter(x=>x.path!==path);r.unshift({name,path,ts:Date.now()});localStorage.setItem('fp-recents',JSON.stringify(r.slice(0,8)));}
+function fpRemoveRecent(path){localStorage.setItem('fp-recents',JSON.stringify(fpGetRecents().filter(x=>x.path!==path)));}
+function fpRenderRecents(){
+  const list=document.getElementById('fp-launch-recent-list');if(!list)return;
+  const r=fpGetRecents();
+  if(!r.length){list.innerHTML='<div id="fp-launch-empty">No recent presentations.<br>Create or open one to get started.</div>';return;}
+  const fmt=ts=>{const d=new Date(ts),now=new Date();const diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});};
+  list.innerHTML=r.map(x=>`<div class="fp-launch-recent-item" onclick="fpLaunchOpenRecent(${JSON.stringify(x.path)},${JSON.stringify(x.name)})"><span class="fp-launch-recent-name" title="${x.path}">${x.name}</span><span class="fp-launch-recent-date">${fmt(x.ts)}</span></div>`).join('');
 }
 function fpTogglePlay(){fp.playing=!fp.playing;const modeEl=document.getElementById('fp-mode'),playBtn=document.getElementById('fp-play-btn');if(fp.playing){fp.playIdx=0;fp._prePlaySelId=fp.selId;fp._prePlayCur=fp.cur;playBtn.classList.add('on');modeEl.textContent='PLAY';modeEl.classList.add('play');document.getElementById('fp-tb').style.display='none';document.getElementById('fp-cv-wrap').style.left='0';document.getElementById('fp-bot').style.left='0';document.getElementById('fp-bot').style.display='none';document.getElementById('fp-rp').style.display='none';document.getElementById('fp-play-ov').style.display='block';if(fp.musicData){fp.bgAudio=new Audio(fp.musicData);fp.bgAudio.loop=true;fp.bgAudio.play().catch(()=>{});}fpRenderPlay();}else{clearInterval(fp.autoTimer);fp.autoTimer=null;if(fp.bgAudio){fp.bgAudio.pause();fp.bgAudio=null;}playBtn.classList.remove('on');modeEl.textContent='EDIT MODE';modeEl.classList.remove('play');document.getElementById('fp-play-ov').style.display='none';document.getElementById('fp-tb').style.display='flex';document.getElementById('fp-cv-wrap').style.left='200px';document.getElementById('fp-bot').style.left='200px';document.getElementById('fp-bot').style.display='flex';document.getElementById('fp-rp').style.display='flex';fp.cur=fp.playIdx;fpClearPanels();fpRender();if(fp._prePlayCur===fp.cur&&fp._prePlaySelId!=null&&OBJ(fp._prePlaySelId)){fpSelect(fp._prePlaySelId);}else{fp.selId=null;fpRpClear();}}}
 function fpPlayNext(){fp.playIdx++;if(fp.playIdx>=fp.slides.length){fpTogglePlay();return;}fpRenderPlay();}
@@ -954,11 +1036,10 @@ document.addEventListener('input',e=>{if(e.target.contentEditable==='true') mark
 
 // Init
 (async()=>{
-  const hadData=await fpLoadFromDisk();
-  if(hadData){document.getElementById('fp-title').value=fp.title;document.getElementById('fp-autorun').value=fp.autoRun;}
   fpRender();
   fpUpdateAudioBtn();
   markClean();
+  fpRenderRecents();
 })();
 </script>
 </body>
