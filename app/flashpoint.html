@@ -981,13 +981,14 @@ function fpApplyLoadedData(data){
       el.innerHTML=`<span class="preso-item-icon">⚡</span><span class="preso-item-name"></span><span class="preso-item-meta">${fmt(x.mtime)}</span><button class="preso-ren" title="Rename">✎</button><button class="preso-del" title="Delete">✕</button>`;
       el.querySelector('.preso-item-name').textContent=x.name;
       el.addEventListener('click',async e=>{
-        if(e.target.closest('.preso-del,.preso-ren'))return;
+        if(e.target.closest('.preso-del,.preso-ren')||el.dataset.renaming)return;
         const data=await window.electronAPI.openFileByPath(x.path);
         if(!data||!data.slides){refreshList();return;}
         fpApplyLoadedData(data);hideLaunch();
       });
       el.querySelector('.preso-ren').addEventListener('click',e=>{
-        e.stopPropagation();
+        e.stopPropagation();e.stopImmediatePropagation();e.preventDefault();
+        el.dataset.renaming='1';
         const nameSpan=el.querySelector('.preso-item-name');
         const inp=document.createElement('input');
         inp.className='preso-rename-input';inp.value=x.name;
@@ -995,6 +996,7 @@ function fpApplyLoadedData(data){
         let done=false;
         async function commit(save){
           if(done)return;done=true;
+          delete el.dataset.renaming;
           const name=inp.value.trim();
           if(save&&name&&name!==x.name){
             const newPath=await window.electronAPI.renamePresentation(x.path,name);
