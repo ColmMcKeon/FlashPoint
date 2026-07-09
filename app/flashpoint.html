@@ -112,9 +112,11 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
 .preso-item-icon{font-size:15px;color:#3a3a5a;flex-shrink:0;}
 .preso-item-name{flex:1;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c4c4d4;}
 .preso-item-meta{font-size:10px;color:#3a3a5a;flex-shrink:0;}
-.preso-del{opacity:0;background:none;border:none;color:#3a3a5a;cursor:pointer;font-size:12px;padding:2px 4px;border-radius:4px;transition:opacity .12s,color .12s;flex-shrink:0;}
-.preso-item:hover .preso-del{opacity:1;}
+.preso-del,.preso-ren{opacity:0;background:none;border:none;color:#3a3a5a;cursor:pointer;font-size:12px;padding:2px 4px;border-radius:4px;transition:opacity .12s,color .12s;flex-shrink:0;}
+.preso-item:hover .preso-del,.preso-item:hover .preso-ren{opacity:1;}
 .preso-del:hover{color:#ef4444;}
+.preso-ren:hover{color:#6366f1;}
+.preso-rename-input{flex:1;min-width:0;font:inherit;font-size:12px;font-weight:600;color:#e2e8f0;background:#0d0d18;border:1px solid #6366f1;border-radius:4px;padding:2px 6px;outline:none;}
 #launch-divider{border:none;border-top:1px solid #1e1e30;margin:4px 0;}
 #launch-new-row{display:flex;gap:8px;}
 #launch-new-input{flex:1;padding:9px 12px;border-radius:8px;background:#1a1a2a;border:1px solid #2a2a40;color:#e2e8f0;font-size:12px;outline:none;font-family:inherit;}
@@ -976,13 +978,32 @@ function fpApplyLoadedData(data){
     items.forEach(x=>{
       const el=document.createElement('div');
       el.className='preso-item';
-      el.innerHTML=`<span class="preso-item-icon">⚡</span><span class="preso-item-name"></span><span class="preso-item-meta">${fmt(x.mtime)}</span><button class="preso-del" title="Delete">✕</button>`;
+      el.innerHTML=`<span class="preso-item-icon">⚡</span><span class="preso-item-name"></span><span class="preso-item-meta">${fmt(x.mtime)}</span><button class="preso-ren" title="Rename">✎</button><button class="preso-del" title="Delete">✕</button>`;
       el.querySelector('.preso-item-name').textContent=x.name;
       el.addEventListener('click',async e=>{
-        if(e.target.closest('.preso-del'))return;
+        if(e.target.closest('.preso-del,.preso-ren'))return;
         const data=await window.electronAPI.openFileByPath(x.path);
         if(!data||!data.slides){refreshList();return;}
         fpApplyLoadedData(data);hideLaunch();
+      });
+      el.querySelector('.preso-ren').addEventListener('click',e=>{
+        e.stopPropagation();
+        const nameSpan=el.querySelector('.preso-item-name');
+        const inp=document.createElement('input');
+        inp.className='preso-rename-input';inp.value=x.name;
+        nameSpan.replaceWith(inp);inp.focus();inp.select();
+        let done=false;
+        async function commit(save){
+          if(done)return;done=true;
+          const name=inp.value.trim();
+          if(save&&name&&name!==x.name){
+            const newPath=await window.electronAPI.renamePresentation(x.path,name);
+            if(newPath&&fp.title===x.name){fp.title=name;document.getElementById('fp-title').value=name;}
+          }
+          refreshList();
+        }
+        inp.addEventListener('keydown',e=>{if(e.key==='Enter')commit(true);else if(e.key==='Escape')commit(false);});
+        inp.addEventListener('blur',()=>commit(true));
       });
       el.querySelector('.preso-del').addEventListener('click',async e=>{
         e.stopPropagation();

@@ -95,6 +95,17 @@ ipcMain.handle('delete-presentation', (e, filePath) => {
   try { fs.unlinkSync(filePath); return true; } catch { return false; }
 });
 
+// Rename a presentation file
+ipcMain.handle('rename-presentation', (e, oldPath, newName) => {
+  try {
+    const ext = path.extname(oldPath);
+    const newPath = path.join(path.dirname(oldPath), newName + ext);
+    fs.renameSync(oldPath, newPath);
+    if (currentSavePath === oldPath) currentSavePath = newPath;
+    return newPath;
+  } catch { return null; }
+});
+
 // List all .fpx files in the data directory
 ipcMain.handle('list-presentations', () => {
   try {
