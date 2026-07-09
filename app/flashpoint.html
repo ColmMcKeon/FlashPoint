@@ -475,9 +475,11 @@ function fpShowRP(o){
 </div>
 <div id="rp-dc-motion" style="display:none;">${fpMotionPanelHTML(o,id,'rp-dc')}</div>`;
   }
+  if(fp.rpTab) fpRpTab(fp.rpTab);
 }
 
 function fpRpTab(key){
+  fp.rpTab=key;
   const body=document.getElementById('fp-lp-body');
   if(!body)return;
   // hide all tab content divs
