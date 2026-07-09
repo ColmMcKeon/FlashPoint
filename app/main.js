@@ -92,11 +92,11 @@ ipcMain.handle('list-presentations', () => {
   try {
     if (!fs.existsSync(DATA_DIR)) return [];
     return fs.readdirSync(DATA_DIR)
-      .filter(f => f.endsWith('.fpx'))
+      .filter(f => f.endsWith('.fpx') || f.endsWith('.json'))
       .map(f => {
         const full = path.join(DATA_DIR, f);
         const stat = fs.statSync(full);
-        return { name: f.replace(/\.fpx$/i, ''), path: full, mtime: stat.mtimeMs };
+        return { name: f.replace(/\.(fpx|json)$/i, ''), path: full, mtime: stat.mtimeMs };
       })
       .sort((a, b) => b.mtime - a.mtime);
   } catch { return []; }
