@@ -87,6 +87,21 @@ ipcMain.handle('open-preso-dialog', async () => {
   } catch { return null; }
 });
 
+// List all .fpx files in the data directory
+ipcMain.handle('list-presentations', () => {
+  try {
+    if (!fs.existsSync(DATA_DIR)) return [];
+    return fs.readdirSync(DATA_DIR)
+      .filter(f => f.endsWith('.fpx'))
+      .map(f => {
+        const full = path.join(DATA_DIR, f);
+        const stat = fs.statSync(full);
+        return { name: f.replace(/\.fpx$/i, ''), path: full, mtime: stat.mtimeMs };
+      })
+      .sort((a, b) => b.mtime - a.mtime);
+  } catch { return []; }
+});
+
 // Open a presentation directly by path (for recent files)
 ipcMain.handle('open-file-by-path', async (e, filePath) => {
   try {

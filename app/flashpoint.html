@@ -139,7 +139,7 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
         <button class="fp-launch-btn" onclick="fpLaunchOpen()">Open...</button>
       </div>
       <div id="fp-launch-recent">
-        <div id="fp-launch-recent-hdr">Open Recent</div>
+        <div id="fp-launch-recent-hdr">Presentations</div>
         <div id="fp-launch-recent-list"></div>
       </div>
     </div>
@@ -938,7 +938,7 @@ async function fpSave(){
   if(!window.electronAPI) return;
   const data={slides:fp.slides,cur:fp.cur,nextId:fp.nextId,title:fp.title,music:fp.music,musicData:fp.musicData,autoRun:fp.autoRun};
   const savedPath=await window.electronAPI.saveData(data);
-  if(savedPath){markClean();fpAddRecent(fp.title||'Untitled',savedPath);}
+  if(savedPath) markClean();
 }
 async function fpLoadFromDisk(){
   if(!window.electronAPI) return false;
@@ -975,15 +975,15 @@ async function fpLaunchOpenRecent(path,name){
   fpAddRecent(name,path);
   fpHideLaunch();
 }
-function fpGetRecents(){try{return JSON.parse(localStorage.getItem('fp-recents')||'[]');}catch{return[];}}
-function fpAddRecent(name,path){let r=fpGetRecents().filter(x=>x.path!==path);r.unshift({name,path,ts:Date.now()});localStorage.setItem('fp-recents',JSON.stringify(r.slice(0,8)));}
-function fpRemoveRecent(path){localStorage.setItem('fp-recents',JSON.stringify(fpGetRecents().filter(x=>x.path!==path)));}
-function fpRenderRecents(){
+function fpAddRecent(){}
+function fpRemoveRecent(){}
+async function fpRenderRecents(){
   const list=document.getElementById('fp-launch-recent-list');if(!list)return;
-  const r=fpGetRecents();
-  if(!r.length){list.innerHTML='<div id="fp-launch-empty">No recent presentations.<br>Create or open one to get started.</div>';return;}
-  const fmt=ts=>{const d=new Date(ts),now=new Date();const diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});};
-  list.innerHTML=r.map(x=>`<div class="fp-launch-recent-item" onclick="fpLaunchOpenRecent(${JSON.stringify(x.path)},${JSON.stringify(x.name)})"><span class="fp-launch-recent-name" title="${x.path}">${x.name}</span><span class="fp-launch-recent-date">${fmt(x.ts)}</span></div>`).join('');
+  if(!window.electronAPI){list.innerHTML='<div id="fp-launch-empty">No presentations found.</div>';return;}
+  const items=await window.electronAPI.listPresentations();
+  if(!items||!items.length){list.innerHTML='<div id="fp-launch-empty">No presentations yet.<br>Click New to create one.</div>';return;}
+  const fmt=ts=>{const d=new Date(ts),now=new Date(),diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});};
+  list.innerHTML=items.map(x=>`<div class="fp-launch-recent-item" onclick="fpLaunchOpenRecent(${JSON.stringify(x.path)},${JSON.stringify(x.name)})"><span class="fp-launch-recent-name" title="${x.path}">${x.name}</span><span class="fp-launch-recent-date">${fmt(x.mtime)}</span></div>`).join('');
 }
 function fpTogglePlay(){fp.playing=!fp.playing;const modeEl=document.getElementById('fp-mode'),playBtn=document.getElementById('fp-play-btn');if(fp.playing){fp.playIdx=0;fp._prePlaySelId=fp.selId;fp._prePlayCur=fp.cur;playBtn.classList.add('on');modeEl.textContent='PLAY';modeEl.classList.add('play');document.getElementById('fp-tb').style.display='none';document.getElementById('fp-cv-wrap').style.left='0';document.getElementById('fp-bot').style.left='0';document.getElementById('fp-bot').style.display='none';document.getElementById('fp-rp').style.display='none';document.getElementById('fp-play-ov').style.display='block';if(fp.musicData){fp.bgAudio=new Audio(fp.musicData);fp.bgAudio.loop=true;fp.bgAudio.play().catch(()=>{});}fpRenderPlay();}else{clearInterval(fp.autoTimer);fp.autoTimer=null;if(fp.bgAudio){fp.bgAudio.pause();fp.bgAudio=null;}playBtn.classList.remove('on');modeEl.textContent='EDIT MODE';modeEl.classList.remove('play');document.getElementById('fp-play-ov').style.display='none';document.getElementById('fp-tb').style.display='flex';document.getElementById('fp-cv-wrap').style.left='200px';document.getElementById('fp-bot').style.left='200px';document.getElementById('fp-bot').style.display='flex';document.getElementById('fp-rp').style.display='flex';fp.cur=fp.playIdx;fpClearPanels();fpRender();if(fp._prePlayCur===fp.cur&&fp._prePlaySelId!=null&&OBJ(fp._prePlaySelId)){fpSelect(fp._prePlaySelId);}else{fp.selId=null;fpRpClear();}}}
 function fpPlayNext(){fp.playIdx++;if(fp.playIdx>=fp.slides.length){fpTogglePlay();return;}fpRenderPlay();}
