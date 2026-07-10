@@ -135,8 +135,9 @@ let currentSavePath = null;
 
 ipcMain.handle('save-data', async (e, data) => {
   try {
-    if (!currentSavePath) {
-      if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    // Always keep presos inside DATA_DIR so they appear in the launcher
+    if (!currentSavePath || !currentSavePath.startsWith(DATA_DIR)) {
       currentSavePath = path.join(DATA_DIR, (data.title || 'Untitled') + '.fpx');
     }
     fs.writeFileSync(currentSavePath, JSON.stringify(data, null, 2), 'utf8');
