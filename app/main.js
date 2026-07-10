@@ -3,7 +3,9 @@ const path = require('path');
 const fs   = require('fs');
 const os   = require('os');
 
-const DATA_DIR  = path.join(os.homedir(), 'Documents', 'FlashPoint');
+const DATA_DIR  = app.isPackaged
+  ? path.join(path.dirname(process.execPath), '../../..', 'Data')
+  : path.join(__dirname, '..', 'Data');
 const DATA_FILE = path.join(DATA_DIR, 'flashpoint.json');
 
 let mainWindow   = null;
