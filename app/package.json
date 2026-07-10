@@ -1,14 +1,14 @@
 {
   "name": "flashpoint",
   "version": "1.0.0",
-  "description": "FlashPoint Presentation Builder",
+  "description": "FlashPoint — presentation builder",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "node node_modules/electron-packager/bin/electron-packager.js . FlashPoint --platform=darwin --arch=arm64 --overwrite --icon=icon.icns --asar && rm -rf ../FlashPoint.app && cp -R FlashPoint-darwin-arm64/FlashPoint.app ../FlashPoint.app && xattr -cr ../FlashPoint.app"
+    "build": "node node_modules/electron-packager/bin/electron-packager.js . FlashPoint --platform=darwin --arch=arm64 --overwrite --icon=icon.icns --asar && rm -rf ~/Applications/FlashPoint.app && cp -R FlashPoint-darwin-arm64/FlashPoint.app ~/Applications/FlashPoint.app && xattr -cr ~/Applications/FlashPoint.app && echo 'App updated at ~/Applications/FlashPoint.app'"
   },
   "devDependencies": {
-    "electron": "^31.7.7",
+    "electron": "^31.0.0",
     "electron-packager": "^17.1.2"
   }
 }
