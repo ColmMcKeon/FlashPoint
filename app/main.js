@@ -3,9 +3,13 @@ const path = require('path');
 const fs   = require('fs');
 const os   = require('os');
 
-const DATA_DIR  = app.isPackaged
-  ? path.join(path.dirname(process.execPath), '../../..', 'Data')
-  : path.join(__dirname, '..', 'Data');
+// Dev: app/../Data  |  Packaged: sibling "Data" folder if it already exists (Colm's OneDrive
+// repo copy), else Documents/Electron App Data/FlashPoint/data for everyone else's install.
+const SIBLING_DATA = path.join(path.dirname(process.execPath), '../../..', 'Data');
+const SHARED_APP_DATA = path.join(app.getPath('documents'), 'Electron App Data', 'FlashPoint', 'data');
+const DATA_DIR  = !app.isPackaged
+  ? path.join(__dirname, '..', 'Data')
+  : fs.existsSync(SIBLING_DATA) ? SIBLING_DATA : SHARED_APP_DATA;
 const DATA_FILE = path.join(DATA_DIR, 'flashpoint.json');
 
 let mainWindow   = null;
