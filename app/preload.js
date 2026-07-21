@@ -14,4 +14,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
   newPresentation:      ()           => ipcRenderer.invoke('new-presentation'),
   openMediaDialog:   (type)     => ipcRenderer.invoke('open-media-dialog', type),
   readFileAsDataUrl: (filePath) => ipcRenderer.invoke('read-file-as-dataurl', filePath),
+  exportPdf:         (slides, title) => ipcRenderer.invoke('export-pdf', slides, title),
 });

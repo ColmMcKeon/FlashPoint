@@ -147,6 +147,56 @@ ipcMain.handle('save-data', async (e, data) => {
   } catch (e) { return null; }
 });
 
+// Export slides as PDF
+ipcMain.handle('export-pdf', async (e, slideImages, title) => {
+  const { filePath } = await dialog.showSaveDialog(mainWindow, {
+    title: 'Export PDF',
+    defaultPath: (title || 'presentation') + '.pdf',
+    filters: [{ name: 'PDF', extensions: ['pdf'] }],
+  });
+  if (!filePath) return null;
+
+  // Write images as temp files so the hidden window can load them via file://
+  const tmpDir = path.join(app.getPath('temp'), 'fp-pdf-export');
+  if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+  const imgPaths = slideImages.map((dataUrl, i) => {
+    const imgPath = path.join(tmpDir, `slide-${i}.jpg`);
+    const base64 = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+    fs.writeFileSync(imgPath, Buffer.from(base64, 'base64'));
+    return imgPath;
+  });
+
+  // Use relative filenames in the HTML so file:// resolution is unambiguous
+  const html = `<!DOCTYPE html><html><head><style>
+    @page{margin:0;size:297mm 185mm;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#000;}
+    .page{width:297mm;height:185mm;page-break-after:always;overflow:hidden;}
+    .page:last-child{page-break-after:avoid;}
+    img{width:297mm;height:185mm;display:block;}
+  </style></head><body>${imgPaths.map((p,i)=>`<div class="page"><img src="slide-${i}.jpg"></div>`).join('')}</body></html>`;
+
+  const tmpHtml = path.join(tmpDir, 'export.html');
+  fs.writeFileSync(tmpHtml, html, 'utf8');
+
+  const win = new BrowserWindow({ show: false, webPreferences: { contextIsolation: true, webSecurity: false } });
+  await win.loadFile(tmpHtml);
+  await new Promise(r => setTimeout(r, 1200));
+  const pdfData = await win.webContents.printToPDF({
+    printBackground: true,
+    pageSize: 'A4',
+    landscape: true,
+    marginsType: 1,
+  });
+  win.destroy();
+  // clean up temp files
+  imgPaths.forEach(p => { try { fs.unlinkSync(p); } catch {} });
+  try { fs.unlinkSync(tmpHtml); fs.rmdirSync(tmpDir); } catch {}
+
+  fs.writeFileSync(filePath, pdfData);
+  return filePath;
+});
+
 // Read a local file as base64 data URL (for native file picker)
 ipcMain.handle('read-file-as-dataurl', async (e, filePath) => {
   try {
