@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "node node_modules/electron-packager/bin/electron-packager.js . FlashPoint --platform=darwin --arch=arm64 --overwrite --icon=icon.icns --asar && rm -rf ~/Applications/FlashPoint.app && cp -R FlashPoint-darwin-arm64/FlashPoint.app ~/Applications/FlashPoint.app && xattr -cr ~/Applications/FlashPoint.app && ln -sf ~/Applications/FlashPoint.app ../FlashPoint.app && echo 'App updated'"
+    "build": "node node_modules/electron-packager/bin/electron-packager.js . FlashPoint --platform=darwin --arch=arm64 --overwrite --icon=icon.icns --asar && node scripts/clean-privacy-keys.js FlashPoint-darwin-arm64/FlashPoint.app && rm -rf ~/Applications/FlashPoint.app && cp -R FlashPoint-darwin-arm64/FlashPoint.app ~/Applications/FlashPoint.app && xattr -cr ~/Applications/FlashPoint.app && ln -sf ~/Applications/FlashPoint.app ../FlashPoint.app && echo 'App updated'"
   },
   "devDependencies": {
     "electron": "^31.0.0",
