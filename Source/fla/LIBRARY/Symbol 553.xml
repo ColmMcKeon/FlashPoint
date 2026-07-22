@@ -1,0 +1,297 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 553" itemID="6a3c6600-000001a6" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 553">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#f676ea">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function playSong(loadMedia)
+{
+   if(loadMedia == undefined)
+   {
+      mySound.loadSound(this.Themusic,false);
+   }
+   else
+   {
+      mySound.loadSound(loadMedia,false);
+   }
+   this.createEmptyMovieClip("temp5",7);
+   temp5.onEnterFrame = function()
+   {
+      bytesLoaded = mySound.getBytesLoaded();
+      bytesTotal = mySound.getBytesTotal();
+      percentLoaded = Math.round(100 * bytesLoaded / bytesTotal);
+      if(percentLoaded &gt; 1)
+      {
+         loadinInf = Number(percentLoaded) + "%";
+         _root.wait.MusicLoad = Number(percentLoaded) + "%";
+      }
+      else
+      {
+         loadinInf = 0;
+         _root.wait.MusicLoad = 0;
+      }
+      if(bytesLoaded == bytesTotal &amp;&amp; mySound.duration &gt; 0)
+      {
+         _parent.MusicLoad = "Complete";
+         _root.MusicAllReady = "go";
+         unloadMovie(this);
+      }
+   };
+}
+function cueSong()
+{
+   this.createEmptyMovieClip("ready",13);
+   ready.onEnterFrame = function()
+   {
+      if(_parent.MusicLoad == "Complete")
+      {
+         if(SongON == true)
+         {
+            mysound.stop();
+            SongON = false;
+            unloadMovie(this);
+         }
+         else
+         {
+            mysound.start();
+            SongON = true;
+            unloadMovie(this);
+         }
+      }
+   };
+}
+function fadeSongout()
+{
+   sndLvl = mySound.getVolume();
+   this.createEmptyMovieClip("MusicFade",_root.winLev);
+   MusicFade.onEnterFrame = function()
+   {
+      sndLvl -= 1;
+      mySound.setVolume(sndLvl);
+      if(sndLvl &lt;= 0)
+      {
+         mySound.Stop();
+         SongON = false;
+         mySound.setVolume(100);
+         unloadMovie(this);
+         _root.winLev += 1;
+      }
+   };
+}
+handle7._alpha = 0;
+handle7.onPress = function()
+{
+   this._parent.startDrag(false);
+};
+handle7.onRelease = function()
+{
+   stopDrag();
+};
+this.Themusic = " ";
+mySound = new Sound();
+this.swapDepths(6022);
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#b228bd">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="29.4" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="7.5" ty="-10.25"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Music&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#5ebbb3">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="113.0" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="7.5" ty="4.25"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Enter Path to .mp3&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#16b3fe">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="33.95" height="10.3" variableName="loadinInf">
+                                             <matrix>
+                                                  <Matrix tx="7.5" ty="33.35"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#cdf8e6">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 549" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="161.05" ty="34.8"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Song Preview";
+}
+on(release){
+   this.cueSong();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#9f8aca">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="126.69999999999999" height="10.3" border="true" variableName="Themusic">
+                                             <matrix>
+                                                  <Matrix tx="7.5" ty="18.3"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#bf3ede">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 545" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="159.3" ty="21.05"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.playSong();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#66ee40">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 544" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="178.15" ty="-5.1"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   _root.mp3loader._x = _root.DockXPos;
+   _root.mp3loader._y = _root.DockYPos;
+   _root.EditPal.MP3_flag = "no";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#97f3bf" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#999999"/>
+                                                  </FillStyle>
+                                                  <FillStyle index="2">
+                                                       <SolidColor color="#333333"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                                  <StrokeStyle index="2">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="2" strokeStyle="1" edges="! 3672 -198| 3672 17| 10 17| 10 -198| 3672 -198"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="2" edges="! 3672 22| 10 22| 10 954| 3672 954| 3672 22"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

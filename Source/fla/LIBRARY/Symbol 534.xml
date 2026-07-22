@@ -1,0 +1,504 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 534" itemID="6a3c6600-0000019c" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 534">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#d252ac">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function ResetAllValues()
+{
+   dataNum = 1;
+   itemNum = 1;
+   prefNum = 1;
+   keyNum = 1;
+   titleNumlist = 1;
+   LinkEstab = "No";
+   statusBox = "";
+}
+function buttonPressed(buttonInstance)
+{
+   if(buttonInstance == sve_btn)
+   {
+      if(this.savetitle == "" || this.savetitle == "Enter a name")
+      {
+         this.savetitle = "Enter a name";
+         this.statusBox = "Waiting for user";
+      }
+      else
+      {
+         if(autSrtBtn.getValue() == true)
+         {
+            PlayCode = Number(7315366);
+            if(autRUNBtn.getValue() == true)
+            {
+               PlayCode = Number(RunIncNum.text);
+            }
+         }
+         else
+         {
+            PlayCode = 0;
+         }
+         this.statusBox = "Launching Save App";
+         fscommand("exec","SaveApp.exe");
+         delete moviePref;
+         moviePref = new Array();
+         moviePref.push(savetitle);
+         moviePref.push(_root.BakColor.endResult);
+         moviePref.push(_root.mp3loader.Themusic);
+         trace(PlayCode);
+         moviePref.push(PlayCode);
+         w = 0;
+         while(w &lt; moviePref.length)
+         {
+            moviePref[w] = String(moviePref[w]);
+            w++;
+         }
+         MakeData();
+      }
+   }
+}
+function MakeData()
+{
+   MovieData = "";
+   statusBox = "Writing xml";
+   MovieData = "&lt;xml&gt;\r&lt;moviePref&gt;\r";
+   i = 0;
+   while(i &lt; moviePref.length)
+   {
+      MovieData = MovieData + "&lt;data" + dataNum + "&gt;" + moviePref[i] + "&lt;/data" + dataNum + "&gt;" + "\n";
+      dataNum += 1;
+      i++;
+   }
+   statusBox = "Point 1";
+   MovieData = MovieData + "&lt;/moviePref&gt;" + "\n" + "&lt;objManager&gt;" + "\n";
+   i = 0;
+   while(i &lt; _root.ObjectManager.length)
+   {
+      MovieData = MovieData + "&lt;item" + itemNum + "&gt;" + _root.ObjectManager[i] + "&lt;/item" + itemNum + "&gt;" + "\n";
+      itemNum += 1;
+      i++;
+   }
+   MovieData = MovieData + "&lt;/objManager&gt;" + "\n" + "&lt;objPref&gt;" + "\n";
+   i = 0;
+   while(i &lt; _root.ObjectManager.length)
+   {
+      ObjPrefs = "O" + _root.ObjectManager[i];
+      MovieData = MovieData + "&lt;pref" + prefNum + "&gt;" + "\n";
+      j = 0;
+      while(j &lt; _root[ObjPrefs].length)
+      {
+         MovieData = MovieData + "&lt;key" + keyNum + "&gt;" + _root[ObjPrefs][j] + "&lt;/key" + keyNum + "&gt;" + "\n";
+         keyNum += 1;
+         j++;
+      }
+      MovieData = MovieData + "&lt;/pref" + prefNum + "&gt;" + "\n";
+      prefNum += 1;
+      i++;
+   }
+   MovieData = MovieData + "&lt;/objPref&gt;" + "\n" + "&lt;/xml&gt;" + "\n";
+   statusBox = "XML Files Created";
+   if(MovieData.length &gt;= 35000)
+   {
+      StartConnect(1);
+   }
+   else
+   {
+      StartConnect();
+   }
+}
+function StartConnect(big)
+{
+   delete LocalConnObj;
+   LocalConnObj = new LocalConnection();
+   this.onEnterFrame = function()
+   {
+      LocalConnObj.send("channelD","Handshake","1");
+      LocalConnObj.onStatus = function(infoObject)
+      {
+         if(infoObject.level == "status" &amp;&amp; _root.sveWindow.LinkEstab == "No")
+         {
+            if(big == 1)
+            {
+               SendBigData();
+               statusBox = "Handshake Large Data..";
+               _root.sveWindow.LinkEstab = "yes";
+            }
+            else
+            {
+               SendData();
+               statusBox = "Handshake..";
+               _root.sveWindow.LinkEstab = "yes";
+            }
+            statusBox = "Sending Data..";
+         }
+         else if(infoObject.level == "error")
+         {
+            if(_root.sveWindow.LinkEstab == "yes")
+            {
+               statusBox = "Data Saved";
+               delete _root.sveWindow.onEnterFrame;
+               delete this.onEnterFrame;
+               WaitScrn();
+            }
+            else
+            {
+               statusBox = "Connecting..";
+            }
+         }
+      };
+   };
+}
+function SendData()
+{
+   LocalConnObj.send("channelD","LCData",MovieData);
+   statusBox = "Sending XML..";
+   sendTitle();
+}
+function SendBigData()
+{
+   chunkSize = Math.ceil(MovieData.length / 35000);
+   indexnum = 35000;
+   nameInc = 1;
+   statusBox = "Sending Large XML data..";
+   j = 0;
+   while(j &lt; chunkSize)
+   {
+      LocalConnObj.send("channelD","sendPiece",MovieData.substr(j * indexnum,indexnum));
+      nameInc += 1;
+      j++;
+   }
+   sendTitle();
+}
+function sendTitle()
+{
+   trace("Send Title");
+   w = 0;
+   while(w &lt; _root.MasterMediaList.length)
+   {
+      nameOne = String(_root.MasterMediaList[w]);
+      compName = String(moviePref[0] + ".xml");
+      if(nameOne == compName)
+      {
+         _root.MasterMediaList.splice(w,1);
+      }
+      w++;
+   }
+   MovieTitleinfo = "&lt;xml&gt;\r";
+   l = 0;
+   while(l &lt; _root.MasterMediaList.length)
+   {
+      MovieTitleinfo += "&lt;presentation" + titleNumlist + " autostart= \"0\"&gt;" + _root.MasterMediaList[l] + "&lt;/presentation" + titleNumlist + "&gt;" + "\n";
+      titleNumlist += 1;
+      l++;
+   }
+   MovieTitleinfo += "&lt;presentation" + titleNumlist + " autostart= \"" + moviePref[3] + "\"&gt;" + moviePref[0] + ".xml&lt;/presentation" + titleNumlist + "&gt;" + "\n";
+   MovieTitleinfo += "&lt;/xml&gt;";
+   LocalConnObj.send("channelD","titleData",MovieTitleinfo);
+   statusBox = "Sending Title information";
+   MovieName = moviePref[0];
+   LocalConnObj.send("channelD","titleName",MovieName);
+   statusBox = "Sending Movie name";
+   this.Backup();
+}
+function CleanUpAfterSave()
+{
+   _root.sveWindow.LinkEstab = "No";
+   _root.ClearMovie();
+   _root.sveWindow._x = _root.DockXPos;
+   _root.sveWindow._y = _root.DockYPos;
+   _root.EditPal.saveApp = false;
+   _root.EditPal._x = _root.DockXPos;
+   _root.EditPal._y = _root.DockYPos;
+   _root.welcom_box._x = 195.7;
+   _root.welcom_box._y = 229.7;
+   _root.LoadAllMovieList();
+   _root.EditPal.OpenWin = true;
+   this.Goflag = "No";
+   this.ChainFlag = "No";
+   delete receiveReply;
+   delete Testlc;
+   delete lc;
+   delete lcChunk;
+   delete lcTitle;
+   delete lcName;
+}
+function Backup()
+{
+   _root.TossMe.BackupData = this.MovieData;
+}
+function WaitScrn()
+{
+   time = getTimer();
+   later = time + 2000;
+   this.createEmptyMovieClip("temp6",8);
+   temp6.onEnterFrame = function()
+   {
+      time = getTimer();
+      if(time &gt;= later)
+      {
+         statusBox = "Please wait..";
+         CleanUpAfterSave();
+         delete this.onEnterFrame;
+      }
+   };
+}
+ResetAllValues();
+receiveReply = new LocalConnection();
+connectSuccess = receiveReply.connect("channelE");
+statusBox = "Data Transfer Complete.";
+receiveReply.Progress = function(msg5)
+{
+   if(msg5 == "Complete")
+   {
+      statusBox = "Data Transfer Complete.";
+   }
+};
+receiveReply.connect("channelE");
+this.swapDepths(6007);
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#f231a3">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="68.1" height="15.5" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="121.3" ty="58.6"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Seconds&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#d32eed">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" name="RunIncNum" width="28.200000000000003" height="13.350000000000001" border="true">
+                                             <matrix>
+                                                  <Matrix tx="86.7" ty="58.6"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>0</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="right" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#bbd6d8">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 248" name="autSrtBtn" centerPoint3DX="51.4" centerPoint3DY="49.0">
+                                             <matrix>
+                                                  <Matrix tx="1.4" ty="42.5"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "Auto Start";
+   initialValue = false;
+   labelPlacement = "right";
+   changeHandler = "clickAuto";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#51fc37">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="35.8" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="5.65" ty="83.05"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Status:&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#904dc1">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="35.7" height="15.5" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="102.3" ty="23.1"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>.xml&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#ac0aee">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="175.75" height="15.899999999999999" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="2.35" ty="-0.4"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Save As&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#b3738d">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="118.2" height="10.3" isSelectable="false" variableName="statusBox">
+                                             <matrix>
+                                                  <Matrix tx="43.75" ty="83.05"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#df28ef">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 248" name="autRUNBtn" centerPoint3DX="51.4" centerPoint3DY="67.45">
+                                             <matrix>
+                                                  <Matrix tx="1.4" ty="60.95"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "Auto Run";
+   initialValue = false;
+   labelPlacement = "right";
+   changeHandler = "clickAuto";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 10" color="#fac54a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 239" name="sve_btn" centerPoint3DX="180.2" centerPoint3DY="30.45">
+                                             <matrix>
+                                                  <Matrix tx="130.2" ty="20.5" a="0.5" d="0.75"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "Save";
+   clickHandler = "buttonPressed";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 11" color="#696abd">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="118.0" height="13.7" border="true" variableName="savetitle">
+                                             <matrix>
+                                                  <Matrix tx="3.05" ty="22.5" a="0.819671630859375" d="1.0"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 12" color="#b7ac3a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 526" symbolType="graphic" loop="loop">
+                                             <matrix>
+                                                  <Matrix tx="0.0" ty="0.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

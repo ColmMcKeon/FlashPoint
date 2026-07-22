@@ -1,0 +1,289 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 462" itemID="6a3c6600-00000168" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 462">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#abae2b">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function CallProps()
+{
+   if(_parent.incoming == true)
+   {
+      MCheight = _parent.Setheight;
+      MCwidth = _parent.Setwidth;
+   }
+   else
+   {
+      MCheight = Math.ceil(_root[AttchTxtFile]._height);
+      MCwidth = Math.ceil(_root[AttchTxtFile]._width);
+      _parent.Setheight = MCheight;
+      _parent.Setwidth = MCwidth;
+   }
+}
+FTxtFile = _parent._name;
+lng = FTxtFile.length;
+AttchTxtFile = FTxtFile.substring(1,lng);
+CallProps();
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#92d451">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 461" symbolType="graphic" loop="loop">
+                                             <matrix>
+                                                  <Matrix tx="0.0" ty="0.0" a="0.05000000074505806" d="0.05000000074505806"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#82c98f">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 460" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-49.05" ty="23.25"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   medialink = "mp3/SoundPlay.swf";
+   Content = medialink;
+   _parent.Content = medialink;
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   loadMovie(Content,_root[AttchTxtFile]);
+   this.createEmptyMovieClip("temp1",1000);
+   temp1.onEnterFrame = function()
+   {
+      if(_root[AttchTxtFile].getBytesLoaded() == _root[AttchTxtFile].getBytesLoaded() &amp;&amp; _root[AttchTxtFile].getBytesLoaded() &gt; 10)
+      {
+      }
+      CallProps();
+      delete this.onEnterFrame;
+   };
+   _parent.MCcontent = Content;
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#3667e9">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 459" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-49.05" ty="11.35"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   medialink = "flv/VideoPlay.swf";
+   Content = medialink;
+   _parent.Content = medialink;
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   loadMovie(Content,_root[AttchTxtFile]);
+   this.createEmptyMovieClip("temp1",1000);
+   temp1.onEnterFrame = function()
+   {
+      if(_root[AttchTxtFile].getBytesLoaded() == _root[AttchTxtFile].getBytesLoaded() &amp;&amp; _root[AttchTxtFile].getBytesLoaded() &gt; 10)
+      {
+      }
+      CallProps();
+      delete this.onEnterFrame;
+   };
+   _parent.MCcontent = Content;
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#e3c4a3">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 342" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="40.4" ty="19.4"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Delete";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   _root.deleteObj(AttchTxtFile);
+   removeMovieClip(_root[AttchTxtFile]);
+   removeMovieClip(_root[_parent._name]);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#a1f5d5">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="98.6" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="-48.55" ty="-20.1"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Enter Path to Media:&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#79b5bd">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 455" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="1.85" ty="16.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   Content = medialink;
+   _parent.Content = medialink;
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   loadMovie(Content,_root[AttchTxtFile]);
+   this.createEmptyMovieClip("temp1",1000);
+   temp1.onEnterFrame = function()
+   {
+      if(_root[AttchTxtFile].getBytesLoaded() == _root[AttchTxtFile].getBytesLoaded() &amp;&amp; _root[AttchTxtFile].getBytesLoaded() &gt; 10)
+      {
+      }
+      CallProps();
+      delete this.onEnterFrame;
+   };
+   _parent.MCcontent = Content;
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#8cee9e">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="93.7" height="10.3" border="true" variableName="medialink">
+                                             <matrix>
+                                                  <Matrix tx="-48.6" ty="-6.3"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#bde03a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 450" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-37.1" ty="-29.8"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 10" color="#43d3dc" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#666666"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! 143 -491| 143 -490"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 143 -490| 1061 -490| 1061 702| -1060 702| -1060 -511"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! -1060 -511| -429 -511"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! -429 -511| -429 -491| 143 -491"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! 535 227| 535 528"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! -388 227| -388 627"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

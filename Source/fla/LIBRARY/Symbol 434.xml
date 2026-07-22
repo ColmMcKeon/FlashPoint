@@ -1,0 +1,517 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 434" itemID="6a3c6600-00000155" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 434">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#c5b4c1">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function WhereM()
+{
+   if(_parent.Sflag != "yes")
+   {
+      this.StarxPoint = math.ceil(_root[AttchTxtFile]._x);
+      this.starypoint = math.ceil(_root[AttchTxtFile]._y);
+   }
+   else
+   {
+      this.StarxPoint = math.ceil(_parent.X_start);
+      this.StaryPoint = math.ceil(_parent.Y_start);
+   }
+   if(_parent.Eflag != "yes")
+   {
+      this.endXpoint = math.ceil(_root[AttchTxtFile]._x);
+      this.endYpoint = math.ceil(_root[AttchTxtFile]._y);
+   }
+   else
+   {
+      this.endXPoint = math.ceil(_parent.X_end);
+      this.endYPoint = math.ceil(_parent.Y_end);
+   }
+}
+function start()
+{
+   _parent.X_start = this.starxpoint;
+   _parent.Y_start = this.starypoint;
+   this.StarxPoint = _parent.X_start;
+   this.StaryPoint = _parent.Y_start;
+   _parent.Sflag = "yes";
+}
+function End()
+{
+   _parent.X_end = this.endXpoint;
+   _parent.Y_end = this.endYpoint;
+   this.endXpoint = _parent.X_end;
+   this.endYpoint = _parent.Y_end;
+   _parent.Eflag = "yes";
+}
+function Selct()
+{
+   NewSpeed = speed.getData();
+   TargetFormat = AttchTxtFile + "f";
+   _parent.DftSpeed = NewSpeed;
+}
+FTxtFile = _parent._name;
+lng = FTxtFile.length;
+AttchTxtFile = FTxtFile.substring(1,lng);
+WhereM();
+compNum = 20;
+if(_parent.incoming == true)
+{
+   this.StarxPoint = _parent.X_start;
+   this.starypoint = _parent.Y_start;
+   this.endXpoint = _parent.X_end;
+   this.endYpoint = _parent.Y_end;
+   _parent.Sflag = "yes";
+   _parent.Eflag = "yes";
+}
+if(_parent.DftSpeed &lt; 1)
+{
+   _parent.DftSpeed = _root.m_Speed;
+}
+if(_parent.DftSpeed == _root.s_Speed)
+{
+   slow_comp.setState(checked);
+}
+else if(_parent.DftSpeed == _root.m_Speed)
+{
+   med_comp.setState(checked);
+}
+else if(_parent.DftSpeed == _root.f_Speed)
+{
+   fst_comp.setState(checked);
+}
+speed.setChangeHandler("Selct");
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#a8ec72">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 433" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-39.1" ty="12.45"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Reset";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   _parent.Sflag = "no";
+   _parent.Eflag = "no";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#8950c4">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 429" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-11.9" ty="6.8"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Lock Position";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   this.end();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#fabbab">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 428" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="40.7" ty="26.25"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Preview";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   _root[AttchTxtFile]._x = this.StarxPoint;
+   _root[AttchTxtFile]._y = this.StaryPoint;
+   _root.moveObj(AttchTxtFile,this.endXpoint,_parent.DftSpeed,this.endYpoint,_parent.DftSpeed);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#ffd01a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 421" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-11.9" ty="-9.3"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Lock Position";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   this.start();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#d55358">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 418" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="28.2" ty="-28.7"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#4ebe9a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="18.6" height="10.3" border="true" maxCharacters="4" variableName="endYPoint">
+                                             <matrix>
+                                                  <Matrix tx="26.4" ty="2.2"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#ca60b8">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="18.6" height="10.3" border="true" maxCharacters="4" variableName="endXpoint">
+                                             <matrix>
+                                                  <Matrix tx="0.85" ty="2.2"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#5dc285">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="18.6" height="10.3" border="true" maxCharacters="4" variableName="starypoint">
+                                             <matrix>
+                                                  <Matrix tx="26.4" ty="-13.9"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 10" color="#ff51c4">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 257" name="fst_comp" centerPoint3DX="49.15" centerPoint3DY="28.0">
+                                             <matrix>
+                                                  <Matrix tx="-0.85" ty="21.5" a="0.300018310546875" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "F";
+   initialState = false;
+   groupName = "speed";
+   data = 5;
+   labelPlacement = "right";
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 11" color="#b688fa">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 257" name="med_comp" centerPoint3DX="24.3" centerPoint3DY="28.0">
+                                             <matrix>
+                                                  <Matrix tx="-25.7" ty="21.5" a="0.300018310546875" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "M";
+   initialState = false;
+   groupName = "speed";
+   data = 15;
+   labelPlacement = "right";
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 12" color="#a75cfe">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 257" name="slow_comp" centerPoint3DX="0.05" centerPoint3DY="28.0">
+                                             <matrix>
+                                                  <Matrix tx="-49.95" ty="21.5" a="0.300018310546875" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "S";
+   initialState = false;
+   groupName = "speed";
+   data = 30;
+   labelPlacement = "right";
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 13" color="#f1d9bb">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="7.449999999999999" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="33.1" ty="-24.75"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Y&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 14" color="#b0835d">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="7.449999999999999" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="7.05" ty="-24.75"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>X&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 15" color="#f65be1">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="18.6" height="10.3" border="true" maxCharacters="4" variableName="StarxPoint">
+                                             <matrix>
+                                                  <Matrix tx="0.85" ty="-13.9"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 16" color="#f58f75">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="25.25" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="-47.7" ty="-5.8"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>End&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="right" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 17" color="#7dd947">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="23.75" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="-46.2" ty="-19.25"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Start&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="right" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 18" color="#3aded3" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#cc99ff"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                                  <StrokeStyle index="2">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="0" strokeStyle="1" edges="! 244 -495| 263 -496"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 213 -495| 214 -495| 240 -495| 244 -495"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! 244 -495| 244 -483| 270 -483| 270 -512| 938 -512| 938 -495"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 938 -495| 1061 -495| 1061 697| -1060 697| -1060 -494"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="2" edges="! -1060 -494| 213 -495"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="2" edges="! 475 396| 475 659"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! -1003 390| 1017 390"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

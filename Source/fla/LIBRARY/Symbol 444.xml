@@ -1,0 +1,86 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 444" itemID="6a3c6600-0000015c" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 444">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#cd71f7">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>handle3._alpha = 0;
+handle3.onPress = function()
+{
+   this._parent.startDrag(false);
+};
+handle3.onRelease = function()
+{
+   this._parent.stopDrag();
+   if(_root.kind == "txt")
+   {
+      _root.createWin(_root.ibeam._x,_root.ibeam._y);
+   }
+   else if(_root.kind == "MC")
+   {
+      _root.MCcreateWin(_root.ibeam._x,_root.ibeam._y);
+   }
+   else if(_root.kind == "Drw")
+   {
+      _root.DrawcreateWin(_root.ibeam._x,_root.ibeam._y);
+   }
+};
+this.onEnterFrame = function()
+{
+   this.swapDepths(6050);
+};
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#e175a2">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 443" name="handle3" centerPoint3DX="-24.65" centerPoint3DY="25.15">
+                                             <matrix>
+                                                  <Matrix tx="-37.95" ty="8.65"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#c616ce" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#0099cc"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! -29 189| -30 -186| 157 24| -29 189"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

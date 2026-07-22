@@ -1,0 +1,95 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 227" itemID="6a3c6600-000000c3" lastModified="1782343169" linkageIdentifier="alignPallete" linkageExportForAS="true">
+     <timeline>
+          <DOMTimeline name="Symbol 227">
+               <layers>
+                    <DOMLayer name="Layer 1" color="#99fcb6">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 226" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="0.0" ty="9.9"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   FTxtFile = _parent._parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   TargetFormat = AttchTxtFile + "f";
+   _root[TargetFormat].align = "right";
+   _root[AttchTxtFile].setTextFormat(_root[TargetFormat]);
+   _root[FTxtFile].pT.Agnflag = "no";
+   removeMovieClip(this);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#7cf61b">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 222" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="0.0" ty="-9.9"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   FTxtFile = _parent._parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   TargetFormat = AttchTxtFile + "f";
+   _root[TargetFormat].align = "left";
+   _root[AttchTxtFile].setTextFormat(_root[TargetFormat]);
+   _root[FTxtFile].pT.Agnflag = "no";
+   removeMovieClip(this);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#c715ea" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 218" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="0.0" ty="0.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   FTxtFile = _parent._parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   TargetFormat = AttchTxtFile + "f";
+   _root[TargetFormat].align = "center";
+   _root[AttchTxtFile].setTextFormat(_root[TargetFormat]);
+   _root[FTxtFile].pT.Agnflag = "no";
+   removeMovieClip(this);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

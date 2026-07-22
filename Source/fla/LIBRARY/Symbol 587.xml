@@ -1,0 +1,243 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 587" itemID="6a3c6600-000001b5" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 587">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#fe1ba7">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function updateDocs(heading)
+{
+   theDocs.htmlText = this[heading];
+}
+function SelectAndClick(Help_list)
+{
+   updateDocs(Help_list.getSelectedItem().data);
+   thecr.setScrollPosition(0);
+   s;
+}
+this.swapDepths(6001);
+theDocs.html = true;
+my_email = "colm_mc2000@yahoo.com";
+Help_list.addItem("Welcome","Welcome_doc");
+Help_list.addItem("Open","Open_doc");
+Help_list.addItem("Save","Save_doc");
+Help_list.addItem("Text","Text_doc");
+Help_list.addItem("Media","Media_doc");
+Help_list.addItem("Draw","Draw_doc");
+Help_list.addItem("Ruler","Ruler_doc");
+Help_list.addItem("Background Color","BkColor_doc");
+Help_list.addItem("Music","Music_doc");
+Help_list.addItem("Insert Slide","Insert_doc");
+Help_list.addItem("Remove Slide","Remove_doc");
+Help_list.addItem("Copy/Move Slide","Move_doc");
+Help_list.addItem("Rec&gt;Previous","PrevRec_doc");
+Help_list.addItem("Rec&gt;Next","NextRec_doc");
+Help_list.addItem("Play","Play_doc");
+Help_list.addItem("Motion Tab","Motion_doc");
+Help_list.addItem("Intelli-clips","intella_doc");
+Help_list.addItem("Publish for the web","PubWeb_doc");
+Help_list.addItem("Questions &amp; Issues","Q_doc");
+Help_list.setChangeHandler("SelectAndClick");
+Help_list.setStyleProperty("background",12770484);
+Welcome_doc = "Welcome to &lt;b&gt;FlashPoint&lt;/b&gt;&lt;br&gt;&lt;br&gt;FlashPoint is an application that allows you to create Power Point-Like presentations in Flash.&lt;br&gt;&lt;br&gt;Your presentations can include Text, Photos, Flash Video, or other Flash Media.&lt;br&gt;&lt;br&gt;You can even add custom drawings, music and motion to your presentation.&lt;br&gt;&lt;br&gt;FlashPoint allows you to save your presentations to playback locally on your computer, or you can post presentations to the web.&lt;br&gt;&lt;br&gt;Select the items below for assistance.";
+Open_doc = "&lt;b&gt;Open&lt;/b&gt;&lt;br&gt;&lt;br&gt;Click on this button to open a saved presentation or to create a new presentation.";
+Ruler_doc = "&lt;b&gt;Ruler&lt;/b&gt;&lt;br&gt;&lt;br&gt;To add alignment to your media elements on stage:&lt;br&gt;&lt;br&gt;1. Click the Ruler button. The Position Grid will appear.&lt;br&gt;&lt;br&gt;2. Select the Align tab on the Media Palette of your element on the stage.&lt;br&gt;&lt;br&gt;3. To align the \'\'X\'\' position (right to left), move the \'\'X\'\' scroll handle of the position grid to the desired position.&lt;br&gt;&lt;br&gt;4.  Click the \'\'Align Left\'\' button in the Media Palette. .&lt;br&gt;&lt;br&gt;5. To align the \'\'Y\'\' position (Up and Down), move the \'\'Y\'\' scroll handle of the position grid to the desired position.&lt;br&gt;&lt;br&gt;4.  Click the \'\'Align Top\'\' button in the Media Palette.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt; If you are authoring content for Mini-FlashPoint, but not using FlashPointMini.exe, use the center grid line as an indication of the bottom of your presentation.";
+BkColor_doc = "&lt;b&gt;Background Color&lt;/b&gt;&lt;br&gt;&lt;br&gt;To change the Background color of your presentation:&lt;br&gt;&lt;br&gt;1.  Click on the Bk Color button. The Color Palette window will appear.&lt;br&gt;&lt;br&gt;2.  Add color by selecting colors from the color menu, or by inputting the hexadecimal color value and clicking the submit button.";
+Music_doc = "&lt;b&gt;Music&lt;/b&gt;&lt;br&gt;&lt;br&gt;To add music to you presentation:&lt;br&gt;&lt;br&gt;1. Click on the Music button. The Music window will appear.&lt;br&gt;&lt;br&gt;2. Enter the path (locally or http://) to the music (.mp3) and click load. The window will indicate when the song is 100% loaded.&lt;br&gt;&lt;br&gt;3. To test the song, click the \'\'Song Preview\'\' button.&lt;br&gt;&lt;br&gt;4. To stop the song click the \'\'Song Preview\'\' button again.&lt;br&gt;&lt;br&gt;5. When you are in Play mode, you can toggle the music on or off by clicking the sound button in the mini controller.&lt;br&gt;&lt;br&gt;&lt;b&gt;Tip&lt;/b&gt;&lt;br&gt;&lt;br&gt;It is a good idea to place all of the media, used in your presentation, in a folder in the same directory as your FlashPoint application.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt; If you wish to use additional music in your presentation, or if you wish to have audio clips on different slides, use the Intelli-clips mp3 player.";
+NextRec_doc = "&lt;b&gt;Record and Next&lt;/b&gt;&lt;br&gt;&lt;br&gt;This button will record the current page and advance to a new page.&lt;br&gt;&lt;br&gt;Your presentation can have as many pages as you want.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Please keep in mind that once you record a page, the positions of your media elements are now locked. If you wish to edit the positions, go to the \'\'Motion Tab\'\' and click the \'\'Reset\'\' button.";
+Play_doc = "&lt;b&gt;Play Mode&lt;/b&gt;&lt;br&gt;&lt;br&gt;There are two modes in FlashPoint, Edit mode and Presentation Mode.&lt;br&gt;&lt;br&gt;The Play mode button will play back your presentation.&lt;br&gt;&lt;br&gt;To enter Edit mode, while you are in Play mode, click the \'\'e\'\' button in the mini controller.&lt;br&gt;&lt;br&gt;While in Play mode, you can also use the arrow keys on your keyboard to progress through the slides";
+Save_doc = "&lt;b&gt;Save&lt;/b&gt;&lt;br&gt;&lt;br&gt;The \'\'Save\'\' button will bring up the Save Window.&lt;br&gt;&lt;br&gt;To save your presentation:&lt;br&gt;&lt;br&gt;1.  Enter the name of your new presentation.&lt;br&gt;&lt;br&gt;&lt;b&gt;Tip&lt;/b&gt;&lt;br&gt;&lt;br&gt;Please make sure there are no spaces in the name. If the name has spaces, you may have problems loading your presentation if you post it to the web.&lt;br&gt;&lt;br&gt;2.  If you wish for your presentation to automatically start when FlashPoint is launched, click the Auto Start checkbox.&lt;br&gt;&lt;br&gt;3.  If you wish for your presentation to automatically play and cycle through at certain intervals when FlashPoint is launched, click the Auto Run checkbox and enter the number of seconds for the interval. &lt;br&gt;(See \'\'Publish for the web\'\')&lt;br&gt;&lt;br&gt;4.  Click the \'\'Save\'\' button. A small application will launch and save your presentation.";
+Text_doc = "&lt;b&gt;Text&lt;/b&gt;&lt;br&gt;&lt;br&gt;To add text to your presentation:&lt;br&gt;&lt;br&gt;1. Click on the Text button. A marker will appear on the end of the cursor.&lt;br&gt;&lt;br&gt;2. Place the cursor on the stage where you want text to appear.&lt;br&gt;&lt;br&gt;3. Click the marker.&lt;br&gt;&lt;br&gt;4. A Text Palette edit window and temporary text will appear.&lt;br&gt;&lt;br&gt;5. Select the text \'\'Type Here \'\' and add your new text.&lt;br&gt;&lt;br&gt;6. You can add formatting and color to your text and re-position your text by using the handle in the Text Palette edit window.&lt;br&gt;&lt;br&gt;7. To add alignment or motion to your text click on the text palette.";
+Media_doc = "&lt;b&gt;Media&lt;/b&gt;&lt;br&gt;&lt;br&gt;To add photos (.jpg) or other Flash media (.swf) to your presentation:&lt;br&gt;&lt;br&gt;1. Click on the Media button. A marker will appear on the end of the cursor.&lt;br&gt;&lt;br&gt;2. Place the cursor on the stage where you want the media to appear.&lt;br&gt;&lt;br&gt;3. Click the marker.&lt;br&gt;&lt;br&gt;4. A Media Palette edit window and temporary media holder will appear.&lt;br&gt;&lt;br&gt;5. Enter that path (locally or http://) and click load.&lt;br&gt;&lt;br&gt;6. You can re-position your media by using the handle in the Media Palette edit window.&lt;br&gt;&lt;br&gt;&lt;b&gt;Tip&lt;/b&gt;&lt;br&gt;&lt;br&gt;It is a good idea to place all of the media, used in your presentation, in a folder in the same directory as your FlashPoint application.";
+Draw_doc = "&lt;b&gt;Draw&lt;/b&gt;&lt;br&gt;&lt;br&gt;The drawing tool can create custom shapes and simple circles.&lt;br&gt;&lt;br&gt;To add custom drawings to your presentation:&lt;br&gt;&lt;br&gt;1. Click on the Draw button. A marker will appear on the end of the cursor.&lt;br&gt;&lt;br&gt;2. Place the cursor on the stage where you want the drawing to appear.&lt;br&gt;&lt;br&gt;3. Click the marker.&lt;br&gt;&lt;br&gt;4.  A Drawing Palette edit window and a smaller Dot Maker window will appear.&lt;br&gt;&lt;br&gt;5. To draw a shape, move the Dot Maker to different positions on stage and click \'\'make dot\'\'. When you have completed your shape click the \'\'connect\'\' button on the Dot Maker window to make an outline.&lt;br&gt;&lt;br&gt;6. You can add color by selecting colors from the color menu on the Drawing Palette, or by inputting the hexadecimal color value and clicking the submit button.&lt;br&gt;&lt;br&gt;7. To draw a simple circle, repeat steps 1-4, then select the \'\'circle\'\' button on the Drawing Palette, and use the Dot Maker to create a dot on stage, the first dot is the center point of the circle. Use the Dot Maker to create another point to mark the outer edge of your circle. These two dots will create a radius of your circle.&lt;br&gt;&lt;br&gt;8.  Use the \'\'connect\'\' button on the Dot Maker to create an outline of your circle.&lt;br&gt;&lt;br&gt;9.  You can add color by selecting colors from the color menu on the Drawing Palette, or by inputting the hexadecimal color value and clicking the submit button.&lt;br&gt;&lt;br&gt;10. You can re-position your media by using the handle in the Media Palette edit window.&lt;br&gt;&lt;br&gt;&lt;b&gt;Tip&lt;/b&gt;&lt;br&gt;&lt;br&gt;Use the ruler as a guide to make shapes more exact.";
+PrevRec_doc = "&lt;b&gt;Record and Previous&lt;/b&gt;&lt;br&gt;&lt;br&gt;This button will record the current page and go back to the prior page.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Please keep in mind that once you record a page, the positions of your media elements are now locked. If you wish to edit the positions, go to the \'\'Motion Tab\'\' and click the \'\'Reset\'\' button.";
+Motion_doc = "&lt;b&gt;Motion Tab&lt;/b&gt;&lt;br&gt;&lt;br&gt;You can enhance your presentation by adding motion effects, to each media element, on every page.&lt;br&gt;&lt;br&gt;To add motion to your media elements:&lt;br&gt;&lt;br&gt;1. Select the \'\'Motion\'\' tab of your media element.&lt;br&gt;&lt;br&gt;2. Position the media element where you wish to start your animation, by moving the Media Palette anywhere on stage.&lt;br&gt;&lt;br&gt;3.  Select the \'\'Lock\'\' button next to the \'\'Start\'\' text. This will lock the start position.&lt;br&gt;&lt;br&gt;4.  Position the media element where you wish to end your animation, by moving the Media Palette anywhere on stage.&lt;br&gt;&lt;br&gt;5.  Select the \'\'Lock\'\' button next to the \'\'End\'\' text. This will lock the end position.&lt;br&gt;&lt;br&gt;6. To control the speed of your animation select the Speed radio button:&lt;br&gt;&lt;b&gt;S&lt;/b&gt;- Slow&lt;br&gt;&lt;b&gt;M&lt;/b&gt;- Medium&lt;br&gt;&lt;b&gt;F&lt;/b&gt;- Fast&lt;br&gt;&lt;br&gt;7. To Preview your animation in \'\'Edit\'\' mode, click the \'\'Preview\'\' button.&lt;br&gt;&lt;br&gt;8. Use the \'\'Reset\'\' button to unlock the \'\'Start\'\' and \'\'End\'\' position values.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;u&gt;Note:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;After a page has been saved, you must use the \'\'Reset\'\' button if you plan on repositioning the media element.&lt;br&gt;&lt;br&gt;After loading a saved page, the Palette edit window will appear in the end position on the motion trail.  Sometimes the end position is off stage. To edit the motion trail, you will have to reduce the height of the FlashPoint movie by grabbing the right left end and moving it to the top right end. You should be able to see your media element. Drag the element to the center of the stage and bring your movie back to normal size, then edit your motion trail. &lt;br&gt;&lt;br&gt;&lt;b&gt;Tip&lt;/b&gt;&lt;br&gt;&lt;br&gt;To make your elements slide in from off stage select the end point first then lock the position. Then add a \'\'-\'\' to the start point \'\'X\'\' field and lock the \'\'Start\'\' position. Also, you can manually edit the filed number coordinates.";
+PubWeb_doc = "&lt;b&gt;Publish for the web&lt;/b&gt;&lt;br&gt;&lt;br&gt;Presentations can be posted on the web using FlashPoint.swf movie:&lt;br&gt;&lt;br&gt;1.Copy ‘’FlashPoint.html’’ and ‘’FlashPoint.swf’’ from the ‘’Playback’’ folder up one folder so both appear in the same folder as FlashPoint.exe.&lt;br&gt;&lt;br&gt;2. If you created a presentation for the mini-player, follow the same steps but use the \'\'FlashPointMini.html\'\' and &lt;br&gt;‘’FlashPointMini.swf’’&lt;br&gt;&lt;br&gt;3. Copy the entire FlashPoint directly to your web server and link the html page.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt; If you want your presentation to automatically start, remember to select \'\'Auto Start\'\' when saving the movie. &lt;br&gt;&lt;br&gt;If you wish for your presentation to automatically play and cycle through at certain intervals when FlashPoint is launched, click the Auto Run checkbox and enter the number of seconds for the interval.";
+Q_doc = "&lt;b&gt;Questions?&lt;br&gt;Comments?&lt;br&gt;Issues?&lt;/b&gt;&lt;br&gt;Let me know.&lt;br&gt;Send me an email.&lt;br&gt;&lt;br&gt;&lt;Font Color=\"#003063\"&gt;&lt;a href=\"mailto:" + my_email + "?Subject=FlashPoint Feedback\"&gt;&lt;b&gt;Colm McKeon&lt;/b&gt;&lt;/a&gt;&lt;/Font&gt;";
+Insert_doc = "&lt;b&gt;Insert Slide&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you wish to insert a new slide into your presentation: &lt;br&gt;&lt;br&gt;1. Navigate to the page where you wish to insert a slide. &lt;br&gt;&lt;br&gt;2. Click the button.";
+Remove_doc = "&lt;b&gt;Remove Slide&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you wish to remove a slide from your presentation: &lt;br&gt;&lt;br&gt;1. Navigate to the page where you wish to delete a slide. &lt;br&gt;&lt;br&gt;2. Click the button.";
+Move_doc = "&lt;b&gt;Copy/Move Slide&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you wish to copy or move a slide to another page in your presentation: &lt;br&gt;&lt;br&gt;1. Navigate to the slide you wish to copy or move.&lt;br&gt;&lt;br&gt;2. Click the button. &lt;br&gt;&lt;br&gt;3.  A dialog box will ask to where you wish to insert your moved or copied slide. &lt;br&gt;&lt;br&gt;4. Click the button.&lt;br&gt;&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; If you wish to copy or move a slide to the end of your presentation, the \'\'Before’’ number should be one digit more than your last presentation slide number.";
+intella_doc = "&lt;b&gt;Intelli-clips&lt;/b&gt;&lt;br&gt;&lt;br&gt;These movie clips allow you to playback mp3\'s or Flash video,.flv.&lt;br&gt;&lt;br&gt;These clips can even search FlashPoints \'\'flv\'\' or \'\'mp3\'\' directory\'s and automatically create a play list, and playback all of your Flash videos and mp3’s.&lt;br&gt;&lt;br&gt;1. Use the Media Palette click on the \'\'Video\'\' or \'\'Sound\'\' button. &lt;br&gt;&lt;br&gt;2. Follow the instructions on screen. You only need to do this once, the media information will be saved for playback later.&lt;br&gt;&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; As always, if you plan on posting your presentation to the web, remember to move the entire flv or mp3 directory\'s with your presentation.";
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#ba6963">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 235" name="Help_list" centerPoint3DX="53.7" centerPoint3DY="217.9">
+                                             <matrix>
+                                                  <Matrix tx="3.7" ty="165.4" a="1.4389801025390625" d="0.4759674072265625"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <color>
+                                                  <Color redMultiplier="0.69921875" greenMultiplier="0.69921875" blueMultiplier="0.69921875" redOffset="77" greenOffset="77" blueOffset="77"/>
+                                             </color>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   selectMultiple = false;
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#6d918c">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" name="theDocs" width="123.45" height="136.65" renderAsHTML="true" lineType="multiline">
+                                             <matrix>
+                                                  <Matrix tx="5.7" ty="20.5" a="1.000457763671875" d="0.9996795654296875"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" autoKern="false" lineSpacing="2.0" rightMargin="0.0" size="0" bitmapSize="0" face="_sans" fillColor="#000000"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#cae7b1">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 57" name="thecr" centerPoint3DX="140.55" centerPoint3DY="68.5">
+                                             <matrix>
+                                                  <Matrix tx="132.6" ty="18.5" a="1.0" d="1.453033447265625"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   _targetInstanceName = "theDocs";
+   horizontal = false;
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#bda341">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills/>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="0" strokeStyle="1" edges="! 2622 366| 2622 3243| 69 3243| 69 366| 2622 366"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#bdec2e">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 584" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="142.5" ty="7.25" a="1.153839111328125" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   _root.HelpWin._x = -631.5;
+   _root.HelpWin._y = -36.2;
+   _root.EditPal.Help_flag = "no";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#ae47f5">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="22.65" height="12.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="3.0" ty="2.45"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Help&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#948b85" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#999999"/>
+                                                  </FillStyle>
+                                                  <FillStyle index="2">
+                                                       <SolidColor color="#333333"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! 2986 274| 3007 274| 3007 275"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 3007 275| 3007 283| 3007 284| 3007 4339| 6 4339| 6 284| 3007 284| 3007 283| 6 283| 6 273"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! 6 273| 8 273"/>
+                                                  <Edge fillStyle0="0" fillStyle1="2" strokeStyle="1" edges="! 8 273| 8 36| 3008 36| 3008 274| 3007 274| 2986 274"/>
+                                                  <Edge fillStyle0="1" fillStyle1="2" strokeStyle="1" edges="! 2986 274| 1432 274| 8 274| 8 273"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

@@ -1,0 +1,265 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 492" itemID="6a3c6600-0000017f" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 492">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#31e18c">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function changeCol(num)
+{
+   if(_parent._parent.objDrwn == "yes")
+   {
+      Number(num);
+      endResult = "0x" + num;
+      mycolor.setRGB(endResult);
+      curLev = root[AttchTxtFile]._level;
+      if(_root[Dstyle] == "lines")
+      {
+         _root.Drwlines(1,endResult,AttchTxtFile,_root[DrawLev]);
+      }
+      else
+      {
+         _root.DrwCircles(1,endResult,AttchTxtFile,_root[DrawLev]);
+      }
+      _root[FTxtFile]._x = _root[FTxtFile].CloseX;
+      _root[FTxtFile]._y = _root[FTxtFile].CloseY;
+   }
+}
+FTxtFile = _parent._parent._name;
+lng = FTxtFile.length;
+AttchTxtFile = FTxtFile.substring(1,lng);
+DrawLev = "C" + AttchTxtFile;
+Dstyle = "S" + AttchTxtFile;
+masterColor = 0;
+mycolor = new Color(targetColor);
+mycolor.setRGB(masterColor);
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#d489f4">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="34.65" height="10.05" border="true" variableName="colorData">
+                                             <matrix>
+                                                  <Matrix tx="6.2" ty="6.25"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#e1a5db">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 490" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="49.4" ty="11.3"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol(colorData);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#c28fd7">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 195" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="15.85" ty="-10.95" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("000000");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#28d1ed">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 192" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="0.25" ty="-2.05" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("003063");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#eade65">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 189" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="47.05" ty="-10.95" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("A52A2A");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#87e7a0">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 186" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="31.45" ty="-10.95" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("007F00");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#a2c840">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 183" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="31.45" ty="-2.05" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("FEA500");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#ac69bf">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 180" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="47.05" ty="-2.05" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("FE0000");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 10" color="#2a9eeb">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 177" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="0.25" ty="-10.95" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("FFFFFF");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 11" color="#6c9b96" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 174" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="15.85" ty="-2.05" a="2.1111907958984375" d="1.191986083984375"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   this.changeCol("FEFE00");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

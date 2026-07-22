@@ -1,0 +1,200 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 495" itemID="6a3c6600-00000181" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 495">
+               <layers>
+                    <DOMLayer name="Layer 1" color="#a255bf">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="53.2" height="10.3" isSelectable="false" variableName="DrawInf">
+                                             <matrix>
+                                                  <Matrix tx="-4.6" ty="21.05"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>Draw Lines</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="right" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#95d130">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 493" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-33.35" ty="22.35"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Delete";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   delete _root.Pinpoints();
+   delete _root.DotCleanUp();
+   _root.CleanUP();
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   DrwaPal = "T" + AttchTxtFile;
+   _root[DrwaPal]._x = _root.DockXPos;
+   _root[DrwaPal]._y = _root.DockYPos;
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   _root.deleteObj(AttchTxtFile);
+   removeMovieClip(_root[AttchTxtFile]);
+   removeMovieClip(_root[_parent._name]);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#c86ee2">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 492" centerPoint3DX="28.9" centerPoint3DY="17.35">
+                                             <matrix>
+                                                  <Matrix tx="-3.25" ty="0.45"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#d303ea">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 489" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-22.05" ty="-4.5"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Circle";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   _root.DrawStyle = "circles";
+   this.DrawInf = "Draw Circle";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#cbabbc">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 485" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-41.55" ty="-4.5"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Line";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   _root.DrawStyle = "lines";
+   this.DrawInf = "Draw Lines";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#8ae945">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 482" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-38.45" ty="-29.35"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#9842cf" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#666666"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                                  <StrokeStyle index="2">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! 143 -491| 143 -490"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 143 -490| 1061 -490| 1061 702| 592 702| -1060 702| -1060 -511"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! -1060 -511| -429 -511"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! -429 -511| -429 -491| 143 -491"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="2" edges="! -1004 202| -251 202| -251 649"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! -1011 -368| 989 -368"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

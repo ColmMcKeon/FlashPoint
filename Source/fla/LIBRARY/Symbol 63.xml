@@ -1,0 +1,38 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 63" itemID="6a3c6600-00000039" lastModified="1782343169">
+     <timeline>
+          <DOMTimeline name="Symbol 63">
+               <layers>
+                    <DOMLayer name="Layer 1" color="#57d3a8" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#d4d0d8"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes/>
+                                             <edges>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1640 -34| 1640 286| 1641 286| 1641 1218| 1640 1218| 1640 1318| 1661 1318| 1661 286| 1940 286| 1940 1218| 1939 1218| 1939 1318| 1960 1318| 1960 -34| 1640 -34"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1940 -14| 1940 266| 1661 266| 1661 260| 1660 260| 1660 -14| 1940 -14"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1863 156| 1804 88| 1800 87| 1797 88| 1737 156| 1737 157| 1736 160| 1741 165| 1859 165| 1864 160| 1863 156"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1737 1449| 1796 1517| 1800 1518| 1803 1517| 1863 1449| 1863 1448| 1864 1445| 1859 1440| 1741 1440[ 1736 1440 1736 1445| 1737 1449"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1940 1339| 1940 1619| 1660 1619| 1660 1339| 1940 1339"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1640 1319| 1640 1635| 1344 1635| 1344 1955| 1664 1955| 1664 1639| 1960 1639| 1960 1319| 1640 1319"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1644 1935| 1364 1935| 1364 1655| 1644 1655| 1644 1935"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 285 1655| 1243 1655| 1243 1656| 1343 1656| 1343 1635| 285 1635| 285 1655"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 152 1732| 84 1791| 83 1795| 84 1798| 152 1858| 153 1858| 156 1859| 161 1854| 161 1736| 156 1731| 152 1732"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 282 1954| 1238 1954| 1238 1955| 1338 1955| 1338 1934| 282 1934| 282 1635| -38 1635| -38 1955| 282 1955| 282 1954"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 262 1935| -18 1935| -18 1655| 262 1655| 262 1935"/>
+                                                  <Edge fillStyle0="1" fillStyle1="0" strokeStyle="0" edges="! 1470 1731[ 1465 1731 1465 1736| 1465 1854| 1470 1859| 1474 1858| 1542 1799| 1543 1795| 1542 1792| 1474 1732| 1473 1732| 1470 1731"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

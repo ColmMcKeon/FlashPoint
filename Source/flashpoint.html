@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>FlashPoint</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F1F3F5;--sidebar:#1C1C2A;--sidebar-hover:#2A2A3D;--sidebar-active:#6366F1;
+  --canvas-bg:#ffffff;--panel-bg:#ffffff;--panel-border:#E5E7EB;
+  --text:#111827;--text-sec:#6B7280;--text-inv:#ffffff;
+  --accent:#6366F1;--accent-lt:#EEF2FF;--danger:#EF4444;--success:#10B981;
+  --radius:8px;--shadow:0 4px 24px rgba(0,0,0,0.12);--shadow-sm:0 2px 6px rgba(0,0,0,0.07);
+}
+body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;color:var(--text);height:100vh;overflow:hidden;}
+#fp{position:relative;width:100vw;height:100vh;background:var(--bg);overflow:hidden;}
+
+/* SIDEBAR */
+#fp-tb{position:absolute;left:0;top:0;bottom:0;width:52px;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:2px;z-index:20;}
+.tb-sep{width:32px;height:1px;background:rgba(255,255,255,0.1);margin:4px 0;}
+.tb-btn{width:36px;height:36px;background:transparent;border:none;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#9CA3AF;transition:all 0.15s;position:relative;}
+.tb-btn:hover{background:var(--sidebar-hover);color:#fff;}
+.tb-btn.on{background:var(--accent);color:#fff;}
+.tb-btn[title]:hover::after{content:attr(title);position:absolute;left:44px;top:50%;transform:translateY(-50%);background:#1F2937;color:#fff;font-size:11px;padding:4px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:999;}
+
+/* DRAW OPTIONS */
+#fp-draw-opts{display:none;flex-direction:column;gap:4px;width:100%;align-items:center;padding:4px 0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);}
+.dsm{font-size:10px;color:#9CA3AF;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:2px 6px;cursor:pointer;width:40px;}
+.dsm.on,.dsm:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+#fp-draw-hint{font-size:9px;color:#6B7280;text-align:center;padding:0 4px;line-height:1.3;}
+
+/* MODE BADGE */
+#fp-mode{margin-top:auto;margin-bottom:4px;font-size:9px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);}
+#fp-mode.play{color:var(--success);}
+
+/* CANVAS AREA */
+#fp-cv-wrap{position:absolute;left:52px;top:0;right:0;bottom:28px;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+#fp-cv{position:relative;width:calc(100% - 32px);height:calc(100% - 32px);background:var(--canvas-bg);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+#fp-ruler-x,#fp-ruler-y{position:absolute;pointer-events:none;z-index:150;}
+#fp-ruler-x{height:1px;left:0;right:0;background:rgba(99,102,241,0.5);}
+#fp-ruler-y{width:1px;top:0;bottom:0;background:rgba(99,102,241,0.5);}
+#fp-dc{position:absolute;top:0;left:0;pointer-events:none;}
+#fp-objs{position:absolute;top:0;left:0;width:100%;height:100%;}
+
+/* OBJECTS */
+.sobj{position:absolute;cursor:move;}
+.sobj.sel::after{content:'';position:absolute;inset:-2px;border:2px solid var(--accent);border-radius:3px;pointer-events:none;}
+.sobj:hover:not(.sel)::after{content:'';position:absolute;inset:-2px;border:1.5px solid rgba(99,102,241,0.4);border-radius:3px;pointer-events:none;}
+
+/* PROPERTY PANELS */
+.pp{position:fixed;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:12px;box-shadow:var(--shadow);z-index:200;overflow:hidden;min-width:210px;}
+.pp-hdr{display:flex;padding:0 4px 0 2px;border-bottom:1px solid var(--panel-border);background:#FAFAFA;}
+.ptab{padding:8px 10px;font-size:11px;font-weight:500;color:var(--text-sec);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.ptab.on{color:var(--accent);border-bottom-color:var(--accent);}
+.pc{padding:10px;}
+.fp-row{display:flex;gap:6px;margin-bottom:8px;align-items:center;}
+.fp-row:last-child{margin-bottom:0;}
+.lbl{font-size:11px;color:var(--text-sec);white-space:nowrap;}
+.fp-inp{font-size:11px;height:28px;border:1px solid var(--panel-border);border-radius:6px;background:#fff;padding:0 8px;color:var(--text);width:100%;}
+.fp-inp:focus{outline:none;border-color:var(--accent);}
+.fp-btn{font-size:11px;padding:5px 10px;height:28px;background:#fff;border:1px solid var(--panel-border);border-radius:6px;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;transition:all 0.12s;}
+.fp-btn:hover{background:var(--accent-lt);border-color:var(--accent);color:var(--accent);}
+.fp-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.fp-btn.danger:hover{background:#FEE2E2;border-color:var(--danger);color:var(--danger);}
+.fp-icon-btn{width:28px;height:28px;background:#fff;border:1px solid var(--panel-border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;flex-shrink:0;}
+.fp-icon-btn:hover{background:var(--accent-lt);border-color:var(--accent);color:var(--accent);}
+.fp-icon-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.fp-divider{border:none;border-top:1px solid var(--panel-border);margin:8px 0;}
+.spd-group{display:flex;border:1px solid var(--panel-border);border-radius:6px;overflow:hidden;}
+.spd-btn{flex:1;padding:4px 0;font-size:10px;font-weight:500;background:#fff;border:none;cursor:pointer;color:var(--text-sec);transition:all 0.12s;}
+.spd-btn:not(:last-child){border-right:1px solid var(--panel-border);}
+.spd-btn.on{background:var(--accent);color:#fff;}
+.spd-btn:hover:not(.on){background:var(--accent-lt);color:var(--accent);}
+
+/* BOTTOM BAR */
+#fp-bot{position:absolute;left:52px;bottom:0;right:0;height:28px;background:var(--panel-bg);border-top:1px solid var(--panel-border);display:flex;align-items:center;justify-content:flex-end;padding:0 12px;gap:8px;}
+.bot-btn{font-size:11px;color:var(--text-sec);background:transparent;border:none;cursor:pointer;padding:2px 6px;border-radius:4px;}
+.bot-btn:hover{background:var(--bg);color:var(--text);}
+#fp-slide-counter{font-size:11px;color:var(--text-sec);font-weight:500;}
+
+/* DOT MARKERS */
+.dot-mk{position:absolute;width:8px;height:8px;background:var(--accent);border:2px solid #fff;border-radius:50%;transform:translate(-4px,-4px);pointer-events:none;z-index:180;box-shadow:0 0 0 1px var(--accent);}
+
+/* PLAY OVERLAY */
+#fp-play-ov{display:none;position:absolute;left:52px;top:0;right:0;bottom:28px;background:#000;z-index:300;overflow:hidden;cursor:pointer;}
+#fp-play-bar{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;}
+#fp-play-bar span{font-size:12px;color:rgba(255,255,255,0.7);}
+.play-stop-btn{font-size:11px;padding:4px 12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#fff;cursor:pointer;}
+.play-stop-btn:hover{background:rgba(255,255,255,0.2);}
+
+@keyframes fpfade{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<div id="fp" aria-label="FlashPoint presentation editor">
+
+<!-- SIDEBAR -->
+<div id="fp-tb">
+  <button class="tb-btn" title="New presentation" onclick="fpNew()"><i class="ti ti-file-plus" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Save as XML" onclick="fpSave()"><i class="ti ti-device-floppy" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Load file" onclick="fpLoad()"><i class="ti ti-upload" style="font-size:18px;" aria-hidden="true"></i></button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" title="Add text" onclick="fpAddText()"><i class="ti ti-letter-t" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Add image" onclick="fpAddImg()"><i class="ti ti-photo" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Add movie / video" onclick="fpAddMovie()"><i class="ti ti-movie" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" id="fp-draw-btn" title="Draw tool" onclick="fpToggleDraw()"><i class="ti ti-pencil" style="font-size:18px;" aria-hidden="true"></i></button>
+  <div id="fp-draw-opts">
+    <button class="dsm on" id="fp-dlines" onclick="fpSetDS('lines')">Lines</button>
+    <button class="dsm" id="fp-dcircle" onclick="fpSetDS('circle')">Circle</button>
+    <label style="font-size:9px;color:#9CA3AF;display:flex;align-items:center;gap:3px;"><input type="checkbox" id="fp-dfill" onchange="fp.drawFill=this.checked" style="width:11px;height:11px;"> Fill</label>
+    <input type="color" id="fp-dcolor" value="#000000" style="width:28px;height:20px;padding:0;border:none;border-radius:3px;cursor:pointer;background:none;" title="Draw color" onchange="fp.drawColor=this.value">
+    <div id="fp-draw-hint">Click to add points</div>
+    <button class="dsm" onclick="fpFinishDraw()">Done</button>
+    <button class="dsm" onclick="fpCancelDraw()">&#x2715;</button>
+  </div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" title="Background color" style="position:relative;" onclick="document.getElementById('fp-bginput').click()"><i class="ti ti-color-swatch" style="font-size:18px;" aria-hidden="true"></i><input type="color" id="fp-bginput" value="#ffffff" style="position:absolute;opacity:0;width:1px;height:1px;" onchange="fpSetBg(this.value)"></button>
+  <button class="tb-btn" title="Ruler guide" id="fp-ruler-btn" onclick="fpToggleRuler()"><i class="ti ti-ruler" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Presentation settings" onclick="fpShowPres()"><i class="ti ti-settings" style="font-size:18px;" aria-hidden="true"></i></button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" title="Previous slide" onclick="fpPrev()"><i class="ti ti-chevron-up" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Next slide" onclick="fpNext()"><i class="ti ti-chevron-down" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Add slide" onclick="fpAddSlide()"><i class="ti ti-layout-board-split" style="font-size:18px;" aria-hidden="true"></i></button>
+  <button class="tb-btn" title="Play presentation" id="fp-play-btn" onclick="fpTogglePlay()"><i class="ti ti-player-play" style="font-size:18px;" aria-hidden="true"></i></button>
+  <div id="fp-mode">EDIT</div>
+</div>
+
+<!-- CANVAS WRAP -->
+<div id="fp-cv-wrap">
+  <div id="fp-cv">
+    <div id="fp-ruler-x" style="display:none;"></div>
+    <div id="fp-ruler-y" style="display:none;"></div>
+    <canvas id="fp-dc" style="position:absolute;top:0;left:0;pointer-events:none;"></canvas>
+    <div id="fp-objs"></div>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="fp-bot">
+  <button class="bot-btn" onclick="fpCopySlide()" title="Copy slide"><i class="ti ti-copy" style="font-size:13px;" aria-hidden="true"></i></button>
+  <button class="bot-btn" onclick="fpMoveSlide()" title="Move slide"><i class="ti ti-arrows-move" style="font-size:13px;" aria-hidden="true"></i></button>
+  <button class="bot-btn" onclick="fpDelSlide()" title="Delete slide"><i class="ti ti-trash" style="font-size:13px;" aria-hidden="true"></i></button>
+  <div style="width:1px;height:14px;background:var(--panel-border);"></div>
+  <button class="bot-btn" onclick="fpSlideMenu()"><i class="ti ti-layout-list" style="font-size:13px;" aria-hidden="true"></i></button>
+  <span id="fp-slide-counter" style="font-size:11px;font-weight:500;color:var(--text-sec);">Slide 1 of 1</span>
+  <button class="bot-btn" onclick="fpToggleAuto()" id="fp-auto-btn" title="Auto-run timer"><i class="ti ti-clock" style="font-size:13px;" aria-hidden="true"></i></button>
+</div>
+
+<!-- TEXT PANEL -->
+<div id="fp-tpp" class="pp" style="display:none;">
+  <div class="pp-hdr">
+    <span class="ptab on" id="tt-font" onclick="fpTTab('font')">Font</span>
+    <span class="ptab" id="tt-align" onclick="fpTTab('align')">Align</span>
+    <span class="ptab" id="tt-motion" onclick="fpTTab('motion')">Motion</span>
+  </div>
+  <div id="tc-font" class="pc">
+    <div class="fp-row">
+      <select id="fp-font-sel" class="fp-inp" onchange="fpSetFont(this.value)" style="flex:1;">
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Helvetica">Helvetica</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+      <input type="number" id="fp-fsz" value="22" class="fp-inp" style="width:54px;" min="8" max="180">
+      <button class="fp-btn" onclick="fpApplySize()" style="white-space:nowrap;">Set</button>
+    </div>
+    <div class="fp-row">
+      <input type="color" id="fp-tcol" value="#000000" style="width:28px;height:28px;padding:2px;border:1px solid var(--panel-border);border-radius:6px;cursor:pointer;" onchange="fpSetTCol(this.value)" title="Text color">
+      <button class="fp-icon-btn" onclick="fpToggle('bold')" id="fp-bb" title="Bold"><b style="font-size:13px;">B</b></button>
+      <button class="fp-icon-btn" onclick="fpToggle('italic')" id="fp-bi" title="Italic"><i style="font-size:13px;">I</i></button>
+      <button class="fp-icon-btn" onclick="fpToggle('underline')" id="fp-bu" title="Underline"><u style="font-size:13px;">U</u></button>
+      <div style="width:1px;height:20px;background:var(--panel-border);"></div>
+      <button class="fp-icon-btn" onclick="fpSetAlign('left')"><i class="ti ti-align-left" style="font-size:13px;" aria-hidden="true"></i></button>
+      <button class="fp-icon-btn" onclick="fpSetAlign('center')"><i class="ti ti-align-center" style="font-size:13px;" aria-hidden="true"></i></button>
+      <button class="fp-icon-btn" onclick="fpSetAlign('right')"><i class="ti ti-align-right" style="font-size:13px;" aria-hidden="true"></i></button>
+    </div>
+    <div class="fp-row">
+      <label style="font-size:11px;display:flex;align-items:center;gap:5px;color:var(--text-sec);"><input type="checkbox" id="fp-bullet" onchange="fpSetBullet(this.checked)"> Bullet list</label>
+      <button class="fp-btn danger" onclick="fpDelSel()" style="margin-left:auto;font-size:11px;">Delete</button>
+    </div>
+  </div>
+  <div id="tc-align" class="pc" style="display:none;">
+    <div class="fp-row">
+      <button class="fp-btn" style="flex:1;" onclick="fpAlignObj('left')">Left</button>
+      <button class="fp-btn" style="flex:1;" onclick="fpAlignObj('center')">Center</button>
+      <button class="fp-btn" style="flex:1;" onclick="fpAlignObj('right')">Right</button>
+    </div>
+    <div class="fp-row">
+      <button class="fp-btn" style="flex:1;" onclick="fpAlignObj('top')">Top</button>
+      <button class="fp-btn" style="flex:1;" onclick="fpAlignObj('middle')">Middle</button>
+      <button class="fp-btn" style="flex:1;" onclick="fpAlignObj('bottom')">Bottom</button>
+    </div>
+    <hr class="fp-divider">
+    <div class="lbl" style="margin-bottom:4px;">Snap to ruler guide</div>
+    <div class="fp-row">
+      <button class="fp-btn" style="flex:1;" onclick="fpRulerSnap('x')">Snap X</button>
+      <button class="fp-btn" style="flex:1;" onclick="fpRulerSnap('y')">Snap Y</button>
+    </div>
+  </div>
+  <div id="tc-motion" class="pc" style="display:none;">
+    <div class="lbl" style="margin-bottom:6px;">Fly-in start position <span style="color:#9CA3AF;font-size:10px;">(leave blank = fade)</span></div>
+    <div class="fp-row">
+      <span class="lbl" style="width:20px;">X</span><input type="number" id="fp-sx" class="fp-inp" style="width:68px;" placeholder="auto" onchange="fpSetMP('startX',this.value)">
+      <span class="lbl" style="width:20px;">Y</span><input type="number" id="fp-sy" class="fp-inp" style="width:68px;" placeholder="auto" onchange="fpSetMP('startY',this.value)">
+    </div>
+    <div class="lbl" style="margin-bottom:4px;">Land at (current position)</div>
+    <div class="fp-row">
+      <span class="lbl" style="width:20px;">X</span><input type="number" id="fp-ex" class="fp-inp" style="width:68px;background:#F9FAFB;" readonly>
+      <span class="lbl" style="width:20px;">Y</span><input type="number" id="fp-ey" class="fp-inp" style="width:68px;background:#F9FAFB;" readonly>
+    </div>
+    <div class="lbl" style="margin-bottom:4px;">Speed</div>
+    <div class="spd-group">
+      <button class="spd-btn" id="fp-spd-s" onclick="fpSetSpd('s')">Slow</button>
+      <button class="spd-btn on" id="fp-spd-m" onclick="fpSetSpd('m')">Medium</button>
+      <button class="spd-btn" id="fp-spd-f" onclick="fpSetSpd('f')">Fast</button>
+    </div>
+    <div class="fp-row" style="margin-top:8px;">
+      <label style="font-size:11px;display:flex;align-items:center;gap:5px;color:var(--text-sec);"><input type="checkbox" id="fp-nofly" onchange="fpSetMP('noFly',this.checked)"> No animation</label>
+    </div>
+  </div>
+</div>
+
+<!-- MOVIE PANEL -->
+<div id="fp-mpp" class="pp" style="display:none;">
+  <div class="pp-hdr">
+    <span class="ptab on" id="mt-movie" onclick="fpMTab('movie')">Media</span>
+    <span class="ptab" id="mt-align" onclick="fpMTab('align')">Align</span>
+    <span class="ptab" id="mt-motion" onclick="fpMTab('motion')">Motion</span>
+  </div>
+  <div id="mc-movie" class="pc">
+    <div class="lbl" style="margin-bottom:4px;">Path to media file</div>
+    <input type="text" id="fp-mpath" class="fp-inp" style="width:100%;margin-bottom:6px;" placeholder="path/to/video.mp4">
+    <div class="fp-row">
+      <button class="fp-btn on" id="fp-m-v" onclick="fpSetMT('movie')" style="flex:1;">Video</button>
+      <button class="fp-btn" id="fp-m-s" onclick="fpSetMT('sound')" style="flex:1;">Sound</button>
+      <button class="fp-btn" onclick="fpLoadMov()" style="flex:1;">Load</button>
+    </div>
+    <div class="fp-row">
+      <span class="lbl">W</span><input type="number" id="fp-mw" class="fp-inp" style="width:60px;" onchange="fpSetMSz('w',this.value)">
+      <span class="lbl">H</span><input type="number" id="fp-mh" class="fp-inp" style="width:60px;" onchange="fpSetMSz('h',this.value)">
+    </div>
+    <button class="fp-btn danger" onclick="fpDelSel()" style="width:100%;margin-top:4px;">Delete</button>
+  </div>
+  <div id="mc-align" class="pc" style="display:none;">
+    <div class="fp-row"><button class="fp-btn" style="flex:1;" onclick="fpAlignObj('left')">Left</button><button class="fp-btn" style="flex:1;" onclick="fpAlignObj('center')">Center</button><button class="fp-btn" style="flex:1;" onclick="fpAlignObj('right')">Right</button></div>
+    <div class="fp-row"><button class="fp-btn" style="flex:1;" onclick="fpAlignObj('top')">Top</button><button class="fp-btn" style="flex:1;" onclick="fpAlignObj('middle')">Middle</button><button class="fp-btn" style="flex:1;" onclick="fpAlignObj('bottom')">Bottom</button></div>
+  </div>
+  <div id="mc-motion" class="pc" style="display:none;">
+    <div class="lbl" style="margin-bottom:6px;">Fly-in start position</div>
+    <div class="fp-row"><span class="lbl" style="width:20px;">X</span><input type="number" id="fp-msx" class="fp-inp" style="width:68px;" onchange="fpSetMP('startX',this.value)"><span class="lbl" style="width:20px;">Y</span><input type="number" id="fp-msy" class="fp-inp" style="width:68px;" onchange="fpSetMP('startY',this.value)"></div>
+    <div class="lbl" style="margin-bottom:4px;">Speed</div>
+    <div class="spd-group"><button class="spd-btn" id="fp-mspd-s" onclick="fpSetSpd('s')">Slow</button><button class="spd-btn on" id="fp-mspd-m" onclick="fpSetSpd('m')">Medium</button><button class="spd-btn" id="fp-mspd-f" onclick="fpSetSpd('f')">Fast</button></div>
+    <div class="fp-row" style="margin-top:8px;"><label style="font-size:11px;display:flex;align-items:center;gap:5px;color:var(--text-sec);"><input type="checkbox" id="fp-mnofly" onchange="fpSetMP('noFly',this.checked)"> No animation</label></div>
+  </div>
+</div>
+
+<!-- DRAW PANEL -->
+<div id="fp-dpp" class="pp" style="display:none;">
+  <div class="pp-hdr">
+    <span class="ptab on" id="dt-draw" onclick="fpDTab('draw')">Shape</span>
+    <span class="ptab" id="dt-motion" onclick="fpDTab('motion')">Motion</span>
+  </div>
+  <div id="dc-draw" class="pc">
+    <div class="fp-row"><span class="lbl">Style:</span><b id="fp-dstyle-lbl" style="font-size:11px;">Lines</b></div>
+    <div class="fp-row"><span class="lbl">Fill:</span><span id="fp-dfill-lbl" style="font-size:11px;">No</span></div>
+    <div class="fp-row"><span class="lbl">Color</span><input type="color" id="fp-dobj-col" style="width:28px;height:28px;padding:2px;border:1px solid var(--panel-border);border-radius:6px;cursor:pointer;" onchange="fpSetDCol(this.value)"></div>
+    <button class="fp-btn danger" onclick="fpDelSel()" style="width:100%;margin-top:4px;">Delete</button>
+  </div>
+  <div id="dc-motion" class="pc" style="display:none;">
+    <div class="lbl" style="margin-bottom:6px;">Fly-in start position</div>
+    <div class="fp-row"><span class="lbl" style="width:20px;">X</span><input type="number" id="fp-dsx" class="fp-inp" style="width:68px;" onchange="fpSetMP('startX',this.value)"><span class="lbl" style="width:20px;">Y</span><input type="number" id="fp-dsy" class="fp-inp" style="width:68px;" onchange="fpSetMP('startY',this.value)"></div>
+    <div class="lbl" style="margin-bottom:4px;">Speed</div>
+    <div class="spd-group"><button class="spd-btn" id="fp-dspd-s" onclick="fpSetSpd('s')">Slow</button><button class="spd-btn on" id="fp-dspd-m" onclick="fpSetSpd('m')">Medium</button><button class="spd-btn" id="fp-dspd-f" onclick="fpSetSpd('f')">Fast</button></div>
+    <div class="fp-row" style="margin-top:8px;"><label style="font-size:11px;display:flex;align-items:center;gap:5px;color:var(--text-sec);"><input type="checkbox" id="fp-dnofly" onchange="fpSetMP('noFly',this.checked)"> No animation</label></div>
+  </div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div id="fp-pset" class="pp" style="display:none;width:260px;">
+  <div id="fp-pset-title" style="font-size:12px;font-weight:600;color:var(--text);padding:10px 12px;border-bottom:1px solid var(--panel-border);cursor:move;">Presentation settings</div>
+  <div class="pc">
+    <div class="lbl" style="margin-bottom:4px;">Title</div>
+    <input type="text" id="fp-title" class="fp-inp" style="width:100%;margin-bottom:10px;" placeholder="Untitled presentation" oninput="fp.title=this.value">
+    <div class="lbl" style="margin-bottom:4px;">Background music URL</div>
+    <div class="fp-row" style="margin-bottom:10px;">
+      <input type="text" id="fp-music" class="fp-inp" style="flex:1;" placeholder="https://.../music.mp3">
+      <button class="fp-icon-btn" onclick="fpPlayMusic()" title="Preview music"><i class="ti ti-player-play" style="font-size:13px;" aria-hidden="true"></i></button>
+    </div>
+    <div class="lbl" style="margin-bottom:4px;">Auto-advance <span style="color:#9CA3AF;">(0 = manual)</span></div>
+    <div class="fp-row" style="margin-bottom:10px;">
+      <input type="number" id="fp-autorun" value="0" min="0" class="fp-inp" style="width:60px;" onchange="fp.autoRun=Number(this.value)">
+      <span class="lbl">seconds per slide</span>
+    </div>
+    <hr class="fp-divider">
+    <div class="fp-row">
+      <button class="fp-btn" style="flex:1;" onclick="document.getElementById('fp-pset').style.display='none'">Close</button>
+      <button class="fp-btn on" style="flex:1;" onclick="fpSave()">Save XML</button>
+    </div>
+  </div>
+</div>
+
+<!-- PLAY OVERLAY -->
+<div id="fp-play-ov" onclick="fpPlayNext()">
+  <div id="fp-play-slide" style="position:relative;width:100%;height:100%;"></div>
+  <div id="fp-play-bar">
+    <span id="fp-play-info">Slide 1 of 1</span>
+    <span style="color:rgba(255,255,255,0.4);font-size:11px;">click to advance</span>
+    <button class="play-stop-btn" onclick="event.stopPropagation();fpTogglePlay()">Stop</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const fp={
+  slides:[{objects:[],bg:'#ffffff'}],
+  cur:0,selId:null,nextId:1,
+  drawMode:false,drawStyle:'lines',drawFill:false,drawColor:'#1C1C2A',
+  activeDraw:null,circleStart:null,
+  playing:false,playIdx:0,autoTimer:null,
+  title:'',music:'',autoRun:0,
+  dragging:null,resizing:null,
+  rulerOn:false,rulerX:200,rulerY:200,
+  speeds:{s:1.5,m:0.7,f:0.25},
+  bgAudio:null
+};
+
+const CV=()=>document.getElementById('fp-cv');
+const OBJS=()=>document.getElementById('fp-objs');
+const SL=()=>fp.slides[fp.cur];
+const OBJ=id=>SL().objects.find(o=>o.id===id);
+
+function fpRender(){
+  const sl=SL(),cv=CV();
+  cv.style.background=sl.bg||'#fff';
+  document.getElementById('fp-bginput').value=sl.bg||'#ffffff';
+  document.getElementById('fp-slide-counter').textContent='Slide '+(fp.cur+1)+' of '+fp.slides.length;
+  OBJS().innerHTML='';
+  document.querySelectorAll('.dot-mk').forEach(d=>d.remove());
+  sl.objects.forEach(o=>fpRenderObj(o));
+  fpUpdateDC();
+}
+
+function fpRenderObj(o){
+  const el=document.createElement('div');
+  el.className='sobj'+(o.id===fp.selId?' sel':'');
+  el.id='obj-'+o.id;
+  el.style.cssText='position:absolute;left:'+o.x+'px;top:'+o.y+'px;';
+
+  if(o.type==='text'){
+    el.style.padding='3px';el.style.minWidth='40px';
+    const inner=document.createElement('div');
+    inner.contentEditable=true;
+    inner.style.cssText='font-family:'+(o.font||'Arial')+';font-size:'+(o.size||22)+'px;font-weight:'+(o.bold?'bold':'normal')+';font-style:'+(o.italic?'italic':'normal')+';text-decoration:'+(o.underline?'underline':'none')+';color:'+(o.color||'#111827')+';text-align:'+(o.align||'left')+';white-space:pre-wrap;min-width:60px;outline:none;';
+    if(o.bullet){inner.style.listStyleType='disc';inner.style.paddingLeft='18px';inner.style.display='list-item';}
+    inner.textContent=o.content||'Text';
+    inner.addEventListener('input',()=>o.content=inner.textContent);
+    inner.addEventListener('blur',()=>o.content=inner.textContent);
+    inner.addEventListener('click',e=>e.stopPropagation());
+    inner.addEventListener('mousedown',e=>e.stopPropagation());
+    el.appendChild(inner);
+  } else if(o.type==='movie'||o.type==='sound'){
+    el.style.width=(o.w||140)+'px';el.style.height=(o.h||100)+'px';el.style.overflow='hidden';el.style.borderRadius='8px';
+    const bg=o.type==='sound'?'linear-gradient(135deg,#4F46E5,#7C3AED)':'linear-gradient(135deg,#2563EB,#06B6D4)';
+    const icon=o.type==='sound'?'ti-music':'ti-movie';
+    el.style.background=bg;el.style.display='flex';el.style.flexDirection='column';el.style.alignItems='center';el.style.justifyContent='center';el.style.gap='6px';
+    el.innerHTML='<i class="ti '+icon+'" style="font-size:30px;color:rgba(255,255,255,0.9);" aria-hidden="true"></i><div style="font-size:10px;color:rgba(255,255,255,0.6);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(o.path||o.type)+'</div>';
+    addRH(el,o);
+  } else if(o.type==='image'){
+    el.style.width=(o.w||140)+'px';el.style.height=(o.h||100)+'px';el.style.background='#F3F4F6';el.style.display='flex';el.style.alignItems='center';el.style.justifyContent='center';el.style.borderRadius='8px';el.style.overflow='hidden';
+    if(o.src){el.innerHTML='<img src="'+o.src+'" style="max-width:100%;max-height:100%;object-fit:contain;" alt="">';}
+    else{el.innerHTML='<div style="text-align:center;font-size:11px;color:#9CA3AF;"><i class="ti ti-photo" style="font-size:28px;color:#D1D5DB;display:block;margin-bottom:4px;" aria-hidden="true"></i>Double-click to load</div>';el.addEventListener('dblclick',e=>{e.stopPropagation();fpPickImg(o.id);});}
+    addRH(el,o);
+  } else if(o.type==='draw'){
+    el.style.cssText='position:absolute;left:'+o.x+'px;top:'+o.y+'px;width:'+(o.w||4)+'px;height:'+(o.h||4)+'px;background:transparent;';
+  }
+
+  if(o.startX!==undefined&&!o.noFly&&o.id===fp.selId){
+    const d=document.createElement('div');d.className='dot-mk';
+    d.style.cssText='position:absolute;left:'+o.startX+'px;top:'+o.startY+'px;';d.title='Fly-in start';
+    CV().appendChild(d);
+  }
+
+  el.addEventListener('mousedown',e=>{
+    if(e.target.contentEditable==='true') return;
+    e.preventDefault();e.stopPropagation();
+    fpSelect(o.id);
+    const r=CV().getBoundingClientRect();
+    fp.dragging={id:o.id,ox:e.clientX-r.left-o.x,oy:e.clientY-r.top-o.y};
+  });
+  el.addEventListener('click',e=>{e.stopPropagation();fpSelect(o.id);});
+  OBJS().appendChild(el);
+}
+
+function addRH(el,o){
+  const rh=document.createElement('div');
+  rh.style.cssText='position:absolute;right:0;bottom:0;width:16px;height:16px;cursor:se-resize;z-index:5;display:flex;align-items:center;justify-content:center;';
+  rh.innerHTML='<svg width="10" height="10" viewBox="0 0 10 10" fill="rgba(255,255,255,0.6)"><circle cx="8" cy="8" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="8" cy="4" r="2"/></svg>';
+  rh.addEventListener('mousedown',e=>{e.stopPropagation();fp.resizing={id:o.id,sw:o.w||140,sh:o.h||100,sx:e.clientX,sy:e.clientY};});
+  el.appendChild(rh);
+}
+
+function fpSelect(id){
+  fp.selId=id;
+  document.querySelectorAll('.sobj').forEach(e=>e.classList.remove('sel'));
+  const el=document.getElementById('obj-'+id);if(el) el.classList.add('sel');
+  const o=OBJ(id);
+  if(!o){fpHideP();return;}
+  if(o.type==='text') fpShowTP(o);
+  else if(o.type==='movie'||o.type==='sound') fpShowMP2(o);
+  else if(o.type==='draw') fpShowDP(o);
+  else fpHideP();
+  fpRender();
+}
+
+function fpHideP(){['fp-tpp','fp-mpp','fp-dpp'].forEach(id=>document.getElementById(id).style.display='none');}
+
+function fpPanelAt(pid,oid,pw,ph){
+  const pp=document.getElementById(pid);
+  const cv=CV().getBoundingClientRect();
+  const el=document.getElementById('obj-'+oid);
+  if(!el){pp.style.left=(cv.left+8)+'px';pp.style.top=(cv.top+8)+'px';return;}
+  const pr=el.getBoundingClientRect();
+  let lx=pr.right+8,ly=pr.top;
+  if(lx+pw>window.innerWidth-8) lx=pr.left-pw-8;
+  if(ly+ph>window.innerHeight-32) ly=window.innerHeight-ph-32;
+  pp.style.left=Math.max(60,lx)+'px';pp.style.top=Math.max(4,ly)+'px';
+}
+
+function fpShowTP(o){
+  fpHideP();const pp=document.getElementById('fp-tpp');pp.style.display='block';fpPanelAt('fp-tpp',o.id,220,170);
+  document.getElementById('fp-font-sel').value=o.font||'Arial';
+  document.getElementById('fp-fsz').value=o.size||22;
+  document.getElementById('fp-tcol').value=o.color||'#111827';
+  document.getElementById('fp-bullet').checked=!!o.bullet;
+  ['bb','bi','bu'].forEach((id,i)=>document.getElementById('fp-'+id).classList.toggle('on',[o.bold,o.italic,o.underline][i]));
+  document.getElementById('fp-sx').value=o.startX!==undefined?o.startX:'';
+  document.getElementById('fp-sy').value=o.startY!==undefined?o.startY:'';
+  document.getElementById('fp-ex').value=Math.round(o.x);
+  document.getElementById('fp-ey').value=Math.round(o.y);
+  fpUpdSpd(o.speed||'m','fp-spd-');
+  document.getElementById('fp-nofly').checked=!!o.noFly;
+}
+
+function fpShowMP2(o){
+  fpHideP();const pp=document.getElementById('fp-mpp');pp.style.display='block';fpPanelAt('fp-mpp',o.id,220,160);
+  document.getElementById('fp-mpath').value=o.path||'';
+  document.getElementById('fp-mw').value=o.w||140;document.getElementById('fp-mh').value=o.h||100;
+  document.getElementById('fp-m-v').classList.toggle('on',o.type==='movie');
+  document.getElementById('fp-m-s').classList.toggle('on',o.type==='sound');
+  document.getElementById('fp-msx').value=o.startX!==undefined?o.startX:'';
+  document.getElementById('fp-msy').value=o.startY!==undefined?o.startY:'';
+  fpUpdSpd(o.speed||'m','fp-mspd-');
+  document.getElementById('fp-mnofly').checked=!!o.noFly;
+}
+
+function fpShowDP(o){
+  fpHideP();const pp=document.getElementById('fp-dpp');pp.style.display='block';fpPanelAt('fp-dpp',o.id,190,110);
+  document.getElementById('fp-dstyle-lbl').textContent=o.drawStyle==='circle'?'Circle':'Lines';
+  document.getElementById('fp-dfill-lbl').textContent=o.fill?'Yes':'No';
+  document.getElementById('fp-dobj-col').value=o.color||'#111827';
+  document.getElementById('fp-dsx').value=o.startX!==undefined?o.startX:'';
+  document.getElementById('fp-dsy').value=o.startY!==undefined?o.startY:'';
+  fpUpdSpd(o.speed||'m','fp-dspd-');
+  document.getElementById('fp-dnofly').checked=!!o.noFly;
+}
+
+function fpUpdSpd(s,pfx){['s','m','f'].forEach(k=>{const el=document.getElementById(pfx+k);if(el)el.classList.toggle('on',k===s);});}
+
+function fpTTab(t){['font','align','motion'].forEach(n=>{document.getElementById('tc-'+n).style.display=n===t?'block':'none';document.getElementById('tt-'+n).className='ptab'+(n===t?' on':'');});}
+function fpMTab(t){['movie','align','motion'].forEach(n=>{document.getElementById('mc-'+n).style.display=n===t?'block':'none';document.getElementById('mt-'+n).className='ptab'+(n===t?' on':'');});}
+function fpDTab(t){['draw','motion'].forEach(n=>{document.getElementById('dc-'+n).style.display=n===t?'block':'none';document.getElementById('dt-'+n).className='ptab'+(n===t?' on':'');});}
+
+function fpCvDown(e){
+  if(fp.drawMode){fpDrawClick(e);return;}
+  if(e.target===CV()||e.target===OBJS()){fp.selId=null;document.querySelectorAll('.sobj').forEach(el=>el.classList.remove('sel'));fpHideP();document.querySelectorAll('.dot-mk').forEach(d=>d.remove());}
+}
+function fpCvMove(e){
+  if(fp.rulerOn){const r=CV().getBoundingClientRect();fp.rulerX=e.clientX-r.left;fp.rulerY=e.clientY-r.top;document.getElementById('fp-ruler-x').style.top=fp.rulerY+'px';document.getElementById('fp-ruler-y').style.left=fp.rulerX+'px';}
+  if(fp.resizing){const rx=fp.resizing,o=OBJ(rx.id);if(o){o.w=Math.max(40,rx.sw+(e.clientX-rx.sx));o.h=Math.max(30,rx.sh+(e.clientY-rx.sy));const el=document.getElementById('obj-'+rx.id);if(el){el.style.width=o.w+'px';el.style.height=o.h+'px';}}return;}
+  if(fp.dragging){const r=CV().getBoundingClientRect(),o=OBJ(fp.dragging.id);if(o){o.x=Math.max(0,e.clientX-r.left-fp.dragging.ox);o.y=Math.max(0,e.clientY-r.top-fp.dragging.oy);const el=document.getElementById('obj-'+fp.dragging.id);if(el){el.style.left=o.x+'px';el.style.top=o.y+'px';}const ex=document.getElementById('fp-ex'),ey=document.getElementById('fp-ey');if(ex)ex.value=Math.round(o.x);if(ey)ey.value=Math.round(o.y);}}
+}
+function fpCvUp(){fp.dragging=null;fp.resizing=null;}
+
+function fpToggleDraw(){fp.drawMode=!fp.drawMode;document.getElementById('fp-draw-btn').classList.toggle('on',fp.drawMode);document.getElementById('fp-draw-opts').style.display=fp.drawMode?'flex':'none';CV().style.cursor=fp.drawMode?'crosshair':'default';if(!fp.drawMode)fpCancelDraw();}
+function fpSetDS(s){fp.drawStyle=s;document.getElementById('fp-dlines').classList.toggle('on',s==='lines');document.getElementById('fp-dcircle').classList.toggle('on',s==='circle');document.getElementById('fp-draw-hint').textContent=s==='lines'?'Click points, dbl-click finish':'Click center then edge';fpCancelDraw();}
+
+function fpDrawClick(e){
+  if(e.target.tagName==='BUTTON'||e.target.closest('button')||e.target.tagName==='INPUT'||e.target.tagName==='LABEL') return;
+  const r=CV().getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+  if(fp.drawStyle==='circle'){
+    if(!fp.circleStart){fp.circleStart={x,y};fpAddDot(x,y);}
+    else{fpCommitCircle(fp.circleStart.x,fp.circleStart.y,Math.sqrt(Math.pow(x-fp.circleStart.x,2)+Math.pow(y-fp.circleStart.y,2)));fp.circleStart=null;document.querySelectorAll('.dot-mk').forEach(d=>d.remove());}
+    return;
+  }
+  if(!fp.activeDraw) fp.activeDraw={points:[],dots:[]};
+  fp.activeDraw.points.push(x,y);fp.activeDraw.dots.push(fpAddDot(x,y));
+  fpDrawActiveLines();if(e.detail===2) fpFinishDraw();
+}
+
+function fpAddDot(x,y){const d=document.createElement('div');d.className='dot-mk';d.style.cssText='position:absolute;left:'+x+'px;top:'+y+'px;background:var(--accent);';CV().appendChild(d);return d;}
+
+function fpDrawActiveLines(){
+  fpUpdateDC();if(!fp.activeDraw||fp.activeDraw.points.length<4) return;
+  const dc=document.getElementById('fp-dc'),ctx=dc.getContext('2d'),pts=fp.activeDraw.points;
+  ctx.strokeStyle='rgba(99,102,241,0.6)';ctx.lineWidth=1.5;ctx.setLineDash([5,3]);
+  ctx.beginPath();ctx.moveTo(pts[0],pts[1]);for(let i=2;i<pts.length;i+=2) ctx.lineTo(pts[i],pts[i+1]);ctx.stroke();ctx.setLineDash([]);
+}
+
+function fpFinishDraw(){
+  if(fp.drawStyle==='circle'){fp.circleStart=null;document.querySelectorAll('.dot-mk').forEach(d=>d.remove());return;}
+  if(!fp.activeDraw||fp.activeDraw.points.length<4) return;
+  const pts=fp.activeDraw.points,xs=pts.filter((_,i)=>i%2===0),ys=pts.filter((_,i)=>i%2!==0);
+  const minX=Math.min.apply(null,xs),minY=Math.min.apply(null,ys);
+  const o={id:fp.nextId++,type:'draw',x:minX,y:minY,w:Math.max(4,Math.max.apply(null,xs)-minX),h:Math.max(4,Math.max.apply(null,ys)-minY),points:pts,drawStyle:'lines',fill:fp.drawFill,color:fp.drawColor,speed:'m'};
+  SL().objects.push(o);fp.activeDraw.dots.forEach(d=>d.remove());fp.activeDraw=null;fpRender();fpSelect(o.id);
+}
+function fpCancelDraw(){if(fp.activeDraw){fp.activeDraw.dots.forEach(d=>d.remove());fp.activeDraw=null;}fp.circleStart=null;document.querySelectorAll('.dot-mk').forEach(d=>d.remove());fpUpdateDC();}
+function fpCommitCircle(cx,cy,r){const o={id:fp.nextId++,type:'draw',x:cx-r,y:cy-r,w:r*2,h:r*2,points:[cx,cy,r],drawStyle:'circle',fill:fp.drawFill,color:fp.drawColor,speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);}
+function fpSetDCol(c){const o=OBJ(fp.selId);if(o){o.color=c;fpUpdateDC();}}
+
+function fpUpdateDC(){
+  const cv=CV(),dc=document.getElementById('fp-dc');dc.width=cv.offsetWidth;dc.height=cv.offsetHeight;
+  const ctx=dc.getContext('2d');ctx.clearRect(0,0,dc.width,dc.height);
+  SL().objects.filter(o=>o.type==='draw').forEach(o=>fpDrawObj(ctx,o));
+}
+function fpDrawObj(ctx,o){
+  ctx.strokeStyle=o.color||'#111827';ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';
+  if(o.drawStyle==='circle'){var cx=o.points[0],cy=o.points[1],r=o.points[2];ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);if(o.fill){ctx.fillStyle=o.color||'#111827';ctx.fill();}ctx.stroke();}
+  else{const pts=o.points;if(pts.length<4) return;ctx.beginPath();ctx.moveTo(pts[0],pts[1]);for(let i=2;i<pts.length;i+=2) ctx.lineTo(pts[i],pts[i+1]);ctx.lineTo(pts[0],pts[1]);if(o.fill){ctx.fillStyle=o.color||'#111827';ctx.fill();}ctx.stroke();}
+}
+
+function fpAddText(){const o={id:fp.nextId++,type:'text',x:60,y:60,content:'Click to edit',font:'Arial',size:24,bold:false,italic:false,underline:false,bullet:false,color:'#111827',align:'left',speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);}
+function fpAddMovie(){const o={id:fp.nextId++,type:'movie',x:80,y:80,w:140,h:100,path:'',speed:'m'};SL().objects.push(o);fpRender();fpSelect(o.id);}
+function fpAddImg(){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.onchange=function(e){const f=e.target.files[0];if(!f) return;const r=new FileReader();r.onload=function(ev){const o={id:fp.nextId++,type:'image',x:60,y:60,w:140,h:100,src:ev.target.result,speed:'m'};SL().objects.push(o);fpRender();};r.readAsDataURL(f);};inp.click();}
+function fpPickImg(id){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.onchange=function(e){const f=e.target.files[0];if(!f) return;const r=new FileReader();r.onload=function(ev){const o=OBJ(id);if(o){o.src=ev.target.result;fpRender();}};r.readAsDataURL(f);};inp.click();}
+
+function fpSetFont(f){const o=OBJ(fp.selId);if(o){o.font=f;fpRender();fpSelect(fp.selId);}}
+function fpApplySize(){const o=OBJ(fp.selId);if(o){o.size=parseInt(document.getElementById('fp-fsz').value)||22;fpRender();fpSelect(fp.selId);}}
+function fpSetTCol(c){const o=OBJ(fp.selId);if(o){o.color=c;fpRender();fpSelect(fp.selId);}}
+function fpToggle(p){const o=OBJ(fp.selId);if(o){o[p]=!o[p];fpRender();fpSelect(fp.selId);}}
+function fpSetAlign(a){const o=OBJ(fp.selId);if(o){o.align=a;fpRender();fpSelect(fp.selId);}}
+function fpSetBullet(v){const o=OBJ(fp.selId);if(o){o.bullet=v;fpRender();fpSelect(fp.selId);}}
+function fpSetMT(t){const o=OBJ(fp.selId);if(!o) return;o.type=t;fpRender();fpSelect(fp.selId);}
+function fpSetMSz(d,v){const o=OBJ(fp.selId);if(o){o[d]=Number(v)||100;fpRender();fpSelect(fp.selId);}}
+function fpLoadMov(){const o=OBJ(fp.selId);if(!o) return;o.path=document.getElementById('fp-mpath').value;fpRender();fpSelect(fp.selId);}
+function fpSetMP(prop,val){const o=OBJ(fp.selId);if(!o) return;if(prop==='noFly') o.noFly=val;else o[prop]=val===''?undefined:Number(val);}
+function fpSetSpd(s){const o=OBJ(fp.selId);if(!o) return;o.speed=s;const pfx=o.type==='text'?'fp-spd-':o.type==='draw'?'fp-dspd-':'fp-mspd-';fpUpdSpd(s,pfx);}
+
+function fpAlignObj(dir){
+  const o=OBJ(fp.selId);if(!o) return;
+  const cv=CV(),w=cv.offsetWidth,h=cv.offsetHeight;
+  const el=document.getElementById('obj-'+o.id),ew=el?el.offsetWidth:100,eh=el?el.offsetHeight:40;
+  if(dir==='left') o.x=0;else if(dir==='center') o.x=Math.floor((w-ew)/2);else if(dir==='right') o.x=w-ew;
+  else if(dir==='top') o.y=0;else if(dir==='middle') o.y=Math.floor((h-eh)/2);else if(dir==='bottom') o.y=h-eh;
+  fpRender();fpSelect(fp.selId);
+}
+function fpRulerSnap(axis){const o=OBJ(fp.selId);if(!o) return;if(axis==='x') o.x=fp.rulerX;else o.y=fp.rulerY;fpRender();fpSelect(fp.selId);}
+function fpToggleRuler(){fp.rulerOn=!fp.rulerOn;document.getElementById('fp-ruler-btn').classList.toggle('on',fp.rulerOn);['fp-ruler-x','fp-ruler-y'].forEach(id=>document.getElementById(id).style.display=fp.rulerOn?'block':'none');}
+
+function fpDelSel(){if(!fp.selId) return;SL().objects=SL().objects.filter(o=>o.id!==fp.selId);fp.selId=null;fpHideP();fpRender();}
+function fpPrev(){if(fp.cur>0){fp.selId=null;fpHideP();fp.cur--;fpRender();}}
+function fpNext(){if(fp.cur<fp.slides.length-1){fp.selId=null;fpHideP();fp.cur++;fpRender();}}
+function fpAddSlide(){fp.slides.push({objects:[],bg:'#ffffff'});fp.cur=fp.slides.length-1;fp.selId=null;fpHideP();fpRender();}
+function fpCopySlide(){const c=JSON.parse(JSON.stringify(SL()));c.objects=c.objects.map(function(o){return Object.assign({},o,{id:fp.nextId++});});fp.slides.splice(fp.cur+1,0,c);fp.cur++;fp.selId=null;fpHideP();fpRender();}
+function fpMoveSlide(){const t=prompt('Move slide '+(fp.cur+1)+' to:',''+(fp.cur+1));const n=parseInt(t);if(!isNaN(n)&&n>=1&&n<=fp.slides.length){const sl=fp.slides.splice(fp.cur,1)[0];fp.slides.splice(n-1,0,sl);fp.cur=n-1;fpRender();}}
+function fpDelSlide(){if(fp.slides.length<=1){SL().objects=[];fpRender();return;}fp.slides.splice(fp.cur,1);if(fp.cur>=fp.slides.length) fp.cur--;fp.selId=null;fpHideP();fpRender();}
+function fpSetBg(c){SL().bg=c;fpRender();}
+function fpSlideMenu(){const lines=fp.slides.map(function(s,i){return(i===fp.cur?'> ':'  ')+(i+1)+'. ('+s.objects.length+' objects)';});const n=parseInt(prompt('Slides:\n'+lines.join('\n')+'\n\nJump to:'));if(n>=1&&n<=fp.slides.length){fp.cur=n-1;fp.selId=null;fpHideP();fpRender();}}
+
+function fpShowPres(){const pp=document.getElementById('fp-pset');pp.style.display=pp.style.display==='none'?'block':'none';if(pp.style.display==='block'){pp.style.left='80px';pp.style.top='80px';}document.getElementById('fp-title').value=fp.title;document.getElementById('fp-music').value=fp.music;document.getElementById('fp-autorun').value=fp.autoRun;}
+function fpPlayMusic(){fp.music=document.getElementById('fp-music').value;if(fp.bgAudio){fp.bgAudio.pause();fp.bgAudio=null;}if(fp.music){fp.bgAudio=new Audio(fp.music);fp.bgAudio.loop=true;fp.bgAudio.play().catch(function(){});}}
+
+function fpNew(){if(!confirm('New presentation? Unsaved work will be lost.')) return;fp.slides=[{objects:[],bg:'#ffffff'}];fp.cur=0;fp.selId=null;fp.nextId=1;fp.title='';fp.music='';fp.autoRun=0;fpHideP();fpRender();}
+
+function fpSave(){
+  fp.title=document.getElementById('fp-title').value||fp.title;fp.music=document.getElementById('fp-music').value||fp.music;fp.autoRun=Number(document.getElementById('fp-autorun').value);
+  var xml='<?xml version="1.0"?>\n<xml>\n<moviePref>\n<data1>'+(fp.title||'Untitled')+'</data1>\n<data2>'+(SL().bg||'#ffffff').replace('#','')+'</data2>\n<data3>'+(fp.music||'')+'</data3>\n<data4>'+fp.autoRun+'</data4>\n</moviePref>\n<objManager>\n';
+  var objs=[];fp.slides.forEach(function(sl,pi){sl.objects.forEach(function(o,li){var nm='P'+(pi+1)+'L'+(li+1);objs.push({nm:nm,o:o});xml+='<item'+objs.length+'>'+nm+'</item'+objs.length+'>\n';});});
+  xml+='</objManager>\n<objPref>\n';
+  objs.forEach(function(item,idx){xml+='<pref'+(idx+1)+'>\n';var o=item.o;var keys=[];
+    if(o.type==='text') keys=[o.type,o.font||'Arial',o.size||22,o.color||'0x000000',!!o.bold,o.align||'left',!!o.italic,!!o.underline,!!o.bullet,o.content||'',o.startX!==undefined?o.startX:o.x,o.startY!==undefined?o.startY:o.y,o.x,o.y,fp.speeds[o.speed||'m']];
+    else if(o.type==='movie'||o.type==='sound') keys=['MC',o.path||'',o.h||100,o.w||140,o.startX!==undefined?o.startX:o.x,o.startY!==undefined?o.startY:o.y,o.x,o.y,fp.speeds[o.speed||'m']];
+    else if(o.type==='draw') keys=[o.type,o.drawStyle||'lines',o.fill?1:0,o.color||'0x000000',o.x,o.y,o.x,o.y].concat(o.points||[]);
+    keys.forEach(function(k,ki){xml+='<key'+(ki+1)+'>'+k+'</key'+(ki+1)+'>\n';});xml+='</pref'+(idx+1)+'>\n';});
+  xml+='</objPref>\n</xml>';
+  var blob=new Blob([xml],{type:'application/xml'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(fp.title||'flashpoint')+'.xml';a.click();
+}
+
+function fpLoad(){var inp=document.createElement('input');inp.type='file';inp.accept='.xml,.json';inp.onchange=function(e){var f=e.target.files[0];if(!f) return;var r=new FileReader();r.onload=function(ev){try{if(f.name.endsWith('.json')){var d=JSON.parse(ev.target.result);if(d.slides){fp.slides=d.slides;fp.cur=0;fp.selId=null;fpHideP();fpRender();}}else{var d=new DOMParser().parseFromString(ev.target.result,'application/xml');var p=d.querySelectorAll('moviePref > *');if(p[0])fp.title=p[0].textContent;alert('Loaded: '+(fp.title||'Untitled'));}}catch(ex){alert('Load error: '+ex.message);}};r.readAsText(f);};inp.click();}
+
+function fpTogglePlay(){
+  fp.playing=!fp.playing;
+  var modeEl=document.getElementById('fp-mode');
+  var playBtn=document.getElementById('fp-play-btn');
+  if(fp.playing){
+    fp.playIdx=fp.cur;
+    playBtn.classList.add('on');modeEl.textContent='PLAY';modeEl.classList.add('play');
+    document.getElementById('fp-play-ov').style.display='block';
+    if(fp.music) fpPlayMusic();
+    fpRenderPlay();
+    if(fp.autoRun>0) fp.autoTimer=setInterval(fpPlayNext,fp.autoRun*1000);
+  } else {
+    clearInterval(fp.autoTimer);fp.autoTimer=null;
+    if(fp.bgAudio){fp.bgAudio.pause();fp.bgAudio=null;}
+    playBtn.classList.remove('on');modeEl.textContent='EDIT';modeEl.classList.remove('play');
+    document.getElementById('fp-play-ov').style.display='none';fp.cur=fp.playIdx;fpRender();
+  }
+}
+
+function fpPlayNext(){fp.playIdx++;if(fp.playIdx>=fp.slides.length){fpTogglePlay();return;}fpRenderPlay();}
+function fpToggleAuto(){var s=prompt('Auto-advance seconds (0=manual):',fp.autoRun);var n=Number(s);if(!isNaN(n)){fp.autoRun=n;document.getElementById('fp-auto-btn').classList.toggle('on',n>0);document.getElementById('fp-autorun').value=n;}}
+
+function fpRenderPlay(){
+  var slide=fp.slides[fp.playIdx];if(!slide){fpTogglePlay();return;}
+  var ps=document.getElementById('fp-play-slide');ps.style.background=slide.bg||'#fff';ps.innerHTML='';
+  document.getElementById('fp-play-info').textContent='Slide '+(fp.playIdx+1)+' of '+fp.slides.length;
+  var cv=CV(),dc=document.createElement('canvas');dc.width=cv.offsetWidth;dc.height=cv.offsetHeight;
+  dc.style.cssText='position:absolute;top:0;left:0;pointer-events:none;';ps.appendChild(dc);
+  var ctx=dc.getContext('2d');slide.objects.filter(function(o){return o.type==='draw';}).forEach(function(o){fpDrawObj(ctx,o);});
+  slide.objects.filter(function(o){return o.type!=='draw';}).forEach(function(o,idx){
+    var el=document.createElement('div');el.style.position='absolute';
+    var spd=fp.speeds[o.speed||'m'];var hasStart=o.startX!==undefined&&!o.noFly;
+    if(hasStart){el.style.left=o.startX+'px';el.style.top=o.startY+'px';el.style.opacity='0';el.style.transition='left '+spd+'s cubic-bezier(.4,0,.2,1), top '+spd+'s cubic-bezier(.4,0,.2,1), opacity '+spd+'s ease';setTimeout(function(){el.style.left=o.x+'px';el.style.top=o.y+'px';el.style.opacity='1';},50+idx*120);}
+    else{el.style.left=o.x+'px';el.style.top=o.y+'px';if(!o.noFly) el.style.animation='fpfade '+spd+'s ease '+(idx*0.12)+'s both';}
+    if(o.type==='text'){el.style.cssText+=';font-family:'+(o.font||'Arial')+';font-size:'+(o.size||22)+'px;font-weight:'+(o.bold?'bold':'normal')+';font-style:'+(o.italic?'italic':'normal')+';text-decoration:'+(o.underline?'underline':'none')+';color:'+(o.color||'#111827')+';text-align:'+(o.align||'left')+';';if(o.bullet){el.style.listStyleType='disc';el.style.paddingLeft='18px';el.style.display='list-item';}el.textContent=o.content||'';}
+    else if(o.type==='movie'){el.style.cssText+=';width:'+(o.w||140)+'px;height:'+(o.h||100)+'px;background:linear-gradient(135deg,#2563EB,#06B6D4);border-radius:8px;display:flex;align-items:center;justify-content:center;';el.innerHTML='<i class="ti ti-movie" style="font-size:36px;color:#fff;" aria-hidden="true"></i>';}
+    else if(o.type==='sound'){el.style.cssText+=';width:'+(o.w||120)+'px;height:'+(o.h||80)+'px;background:linear-gradient(135deg,#4F46E5,#7C3AED);border-radius:8px;display:flex;align-items:center;justify-content:center;';el.innerHTML='<i class="ti ti-music" style="font-size:30px;color:#fff;" aria-hidden="true"></i>';}
+    else if(o.type==='image'&&o.src){el.style.cssText+=';width:'+(o.w||140)+'px;height:'+(o.h||100)+'px;border-radius:8px;overflow:hidden;';var img=document.createElement('img');img.src=o.src;img.style.cssText='max-width:100%;max-height:100%;object-fit:contain;';el.appendChild(img);}
+    ps.appendChild(el);
+  });
+}
+
+['fp-tpp','fp-mpp','fp-dpp','fp-pset'].forEach(function(id){
+  var pp=document.getElementById(id);var drag=null;
+  pp.addEventListener('mousedown',function(e){if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='BUTTON'||e.target.closest('button')||e.target.closest('input')||e.target.closest('select')||e.target.closest('label')) return;drag={ox:e.clientX-parseInt(pp.style.left||0),oy:e.clientY-parseInt(pp.style.top||0)};e.preventDefault();});
+  document.addEventListener('mousemove',function(e){if(!drag) return;pp.style.left=(e.clientX-drag.ox)+'px';pp.style.top=(e.clientY-drag.oy)+'px';});
+  document.addEventListener('mouseup',function(){drag=null;});
+});
+
+var cv=CV();
+cv.addEventListener('mousedown',fpCvDown);
+document.addEventListener('mousemove',fpCvMove);
+document.addEventListener('mouseup',fpCvUp);
+window.addEventListener('resize',fpUpdateDC);
+fpRender();
+</script>
+</body>
+</html>

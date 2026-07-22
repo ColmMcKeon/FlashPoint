@@ -1,0 +1,469 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 366" itemID="6a3c6600-0000012e" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 366">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#9172e4">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function click()
+{
+   btn = fonttype.getData();
+   InstFont = btn;
+   TargetFormat = AttchTxtFile + "f";
+   _root[TargetFormat].font = btn;
+   _root[AttchTxtFile].setTextFormat(_root[TargetFormat]);
+}
+FTxtFile = _parent._name;
+lng = FTxtFile.length;
+AttchTxtFile = FTxtFile.substring(1,lng);
+ForAttchTxtFile = AttchTxtFile + "f";
+this.fntSze = _root[ForAttchTxtFile].size;
+if(_root[ForAttchTxtFile].font == "_sans")
+{
+   this.FontRadioSans.setState(true);
+}
+else
+{
+   this.FontRadioSerif.setState(true);
+}
+fonttype.setChangeHandler("click");
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#c9407b">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMInputText fontRenderingMode="device" width="27.85" height="10.3" border="true" variableName="fntSze">
+                                             <matrix>
+                                                  <Matrix tx="-48.05" ty="-4.1"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMInputText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#8b93c2">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 364" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-4.35" ty="1.25"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   ForAttchTxtFile = AttchTxtFile + "f";
+   _root[ForAttchTxtFile].size = fntSze;
+   _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#d16354">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 358" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="8.5" ty="23.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   if(Uflag == "yes")
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].italic = false;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Uflag = "no";
+   }
+   else
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].underline = true;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Uflag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#98d6ae">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 352" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="43.0" ty="23.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   AlignName = FTxtFile + "AlgnObj";
+   if(Agnflag == "yes")
+   {
+      removeMovieClip(this[AlignName]);
+      Agnflag = "no";
+   }
+   else
+   {
+      this.attachMovie("alignPallete",AlignName,33);
+      this[AlignName]._x = 45;
+      this[AlignName]._y = 45;
+      Agnflag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#f4516b">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 348" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-8.75" ty="23.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   if(Iflag == "yes")
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].italic = false;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Iflag = "no";
+   }
+   else
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].italic = true;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Iflag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#a7e841">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 342" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="34.2" ty="0.4"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   _root.EditPal.tooltip = "Delete";
+}
+on(rollOut){
+   _root.EditPal.tooltip = "";
+}
+on(release){
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   _root.deleteObj(AttchTxtFile);
+   removeMovieClip(_root[AttchTxtFile]);
+   removeMovieClip(_root[_parent._name]);
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#aa4ca9">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 338" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-43.25" ty="23.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   FTxtFile = _parent._name;
+   lng = FTxtFile.length;
+   AttchTxtFile = FTxtFile.substring(1,lng);
+   ColorOb = FTxtFile + "ColObj";
+   if(Colflag == "yes")
+   {
+      removeMovieClip(this[ColorOb]);
+      Colflag = "no";
+   }
+   else
+   {
+      this.attachMovie("colorPallete",ColorOb,33);
+      this[ColorOb]._x = -55;
+      this[ColorOb]._y = 20;
+      Colflag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#4eb6f4">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 334" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="25.75" ty="23.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   if(Bulflag == "yes")
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].bullet = false;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Bulflag = "no";
+   }
+   else
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].bullet = true;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Bulflag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 10" color="#95e583">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 330" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-26.0" ty="23.6"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   if(Bflag == "yes")
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].bold = false;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Bflag = "no";
+   }
+   else
+   {
+      FTxtFile = _parent._name;
+      lng = FTxtFile.length;
+      AttchTxtFile = FTxtFile.substring(1,lng);
+      ForAttchTxtFile = AttchTxtFile + "f";
+      _root[ForAttchTxtFile].bold = true;
+      _root[AttchTxtFile].setTextFormat(_root[ForAttchTxtFile]);
+      Bflag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 11" color="#cf5edc">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 257" name="FontRadioSerif" centerPoint3DX="55.05" centerPoint3DY="-16.25">
+                                             <matrix>
+                                                  <Matrix tx="5.05" ty="-22.75" a="0.5" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "Times";
+   initialState = false;
+   groupName = "fonttype";
+   data = "_serif";
+   labelPlacement = "right";
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 12" color="#e0e9b6">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 257" name="FontRadioSans" centerPoint3DX="-1.75" centerPoint3DY="-16.25">
+                                             <matrix>
+                                                  <Matrix tx="-51.75" ty="-22.75" a="0.5" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "Arial";
+   initialState = false;
+   groupName = "fonttype";
+   data = "_sans";
+   labelPlacement = "right";
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 13" color="#518dee">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 323" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="-37.2" ty="-29.1"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 14" color="#d0d28f" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#666666"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                                  <StrokeStyle index="2">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! 143 -491| 143 -490"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 143 -490| 1061 -490| 1061 702| -1060 702| -1060 -511"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="0" edges="! -1060 -511| -429 -511"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! -429 -511| -429 -491| 143 -491"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! 343 -178| 343 214"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! -1014 -186| 986 -186"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="2" edges="! -1022 237| 978 237"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

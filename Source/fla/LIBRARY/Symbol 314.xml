@@ -1,0 +1,699 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 314" itemID="6a3c6600-0000010d" lastModified="1782343170">
+     <timeline>
+          <DOMTimeline name="Symbol 314">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#bccd7a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function MapHelpWin()
+{
+   if(Help_flag == "yes")
+   {
+      _root.HelpWin._x = _root.EditPal._x + 85;
+      _root.HelpWin._y = _root.EditPal._y;
+   }
+}
+thehandle._alpha = 0;
+thehandle.onPress = function()
+{
+   this._parent.startDrag(false);
+};
+thehandle.onRelease = function()
+{
+   stopDrag();
+   MapHelpWin();
+};
+this.tooltip = "Edit Mode";
+this.swapDepths(6000);
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#f3ecdc">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 313" name="thehandle" centerPoint3DX="75.3" centerPoint3DY="9.65">
+                                             <matrix>
+                                                  <Matrix tx="38.25" ty="4.15"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#c20ee7">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 312" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="64.7" ty="99.75"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Copy/Move";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(Move_flag == "yes")
+   {
+      _root.MoveScreen._x = _root.DockXPos;
+      _root.MoveScreen._y = _root.DockYPos;
+      Move_flag = "no";
+   }
+   else
+   {
+      _root.MoveScreen.ResetListPages();
+      _root.MoveScreen.erScren.text = "";
+      _root.MoveScreen._x = _root.EditPal._x + 85;
+      _root.MoveScreen._y = _root.EditPal._y + 90;
+      Move_flag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#a4deb9">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 310" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="39.65" ty="99.75" a="0.9976348876953125" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Remove Slide";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(_root.Page &gt; _root.maxpage)
+   {
+      _root.soloErrorMes.ErrorTitleBar.text = "Remove Page";
+      _root.soloErrorMes.TheMess.text = "!Page " + _root.Page + " has not been saved.";
+      _root.soloErrorMes._x = _root.EditPal._x + 85;
+      _root.soloErrorMes._y = _root.EditPal._y + 80;
+   }
+   else
+   {
+      _root.AlterPage(-1);
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#b0847c">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 308" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="14.7" ty="99.75" a="0.9976348876953125" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Insert Slide";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(_root.Page &gt; _root.maxpage)
+   {
+      _root.soloErrorMes.ErrorTitleBar.text = "Insert Page";
+      _root.soloErrorMes.TheMess.text = "!Page " + _root.Page + " has not been saved.";
+      _root.soloErrorMes._x = _root.EditPal._x + 85;
+      _root.soloErrorMes._y = _root.EditPal._y + 70;
+   }
+   else
+   {
+      _root.AlterPage(1);
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#f892e6">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="64.15" height="10.3" variableName="tooltip">
+                                             <matrix>
+                                                  <Matrix tx="7.7" ty="141.6" a="1.0009307861328125" d="1.0009002685546875"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters/>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#000000" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#8cb9af">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 305" symbolType="graphic" loop="loop">
+                                             <matrix>
+                                                  <Matrix tx="35.75" ty="148.9"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 8" color="#ba5bbc">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 304" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="64.65" ty="22.35" a="0.9976348876953125" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Help";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(Help_flag == "yes")
+   {
+      _root.HelpWin._x = _root.DockXPos;
+      _root.HelpWin._y = _root.DockYPos;
+      Help_flag = "no";
+   }
+   else
+   {
+      _root.HelpWin._x = _root.EditPal._x + 85;
+      _root.HelpWin._y = _root.EditPal._y;
+      Help_flag = "yes";
+      _root.HelpWin.updateDocs("Welcome_doc");
+      _root.HelpWin.Help_list.setSelectedIndex(0);
+      _root.MoveScreen._x = _root.DockXPos;
+      _root.MoveScreen._y = _root.DockYPos;
+      Move_flag = "no";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 9" color="#5996f8">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 300" centerPoint3DX="67.8" centerPoint3DY="8.1">
+                                             <matrix>
+                                                  <Matrix tx="28.55" ty="3.4" a="0.99932861328125" d="0.988800048828125"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 10" color="#39eb8e">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 298" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="14.75" ty="22.35" a="0.9976348876953125" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Open";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(OpenWin == true)
+   {
+      _root.welcom_box._x = _root.DockXPos;
+      _root.welcom_box._y = _root.DockYPos;
+      OpenWin = false;
+   }
+   else if(OpenWin == "InAutoMode")
+   {
+      _root.List(1,"yes");
+      _root.welcom_box._x = 195.7;
+      _root.welcom_box._y = 229.7;
+      OpenWin = false;
+   }
+   else
+   {
+      _root.List(1,"yes");
+      _root.welcom_box._x = 195.7;
+      _root.welcom_box._y = 229.7;
+      _root.LoadAllMovieList();
+      OpenWin = true;
+      _root.MoveScreen._x = _root.DockXPos;
+      _root.MoveScreen._y = _root.DockYPos;
+      Move_flag = "no";
+      _root.mp3loader._x = _root.DockXPos;
+      _root.mp3loader._y = _root.DockYPos;
+      _root.EditPal.MP3_flag = "no";
+      _root.soloErrorMes._x = _root.DockXPos;
+      _root.soloErrorMes._y = _root.DockYPos;
+      _root.HelpWin._x = _root.DockXPos;
+      _root.HelpWin._y = _root.DockYPos;
+      _root.EditPal.Help_flag = "no";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 11" color="#a4e26c">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 294" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="14.65" ty="124.95" a="0.996551513671875" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Rec&gt;Previous";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.List(-1);
+   _root.MoveScreen.ResetListPages();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 12" color="#7fedaa">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 291" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="39.6" ty="124.95" a="0.996551513671875" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Rec&gt;Next";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.List(1);
+   _root.MoveScreen.ResetListPages();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 13" color="#c163f3">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 288" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="39.65" ty="22.35" a="0.9976348876953125" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Save";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(saveApp == true)
+   {
+      _root.sveWindow._x = _root.DockXPos;
+      _root.sveWindow._y = _root.DockYPos;
+      saveApp = false;
+      _root.Page = 1;
+      _root.thepage = _root.Page;
+      _root.PageClean();
+   }
+   else
+   {
+      _root.List(1,"yes");
+      _root.thepage = Page;
+      _root.sveWindow._x = 260.7;
+      _root.sveWindow._y = 229.7;
+      _root.sveWindow.ResetAllValues();
+      _root.MoveScreen._x = _root.DockXPos;
+      _root.MoveScreen._y = _root.DockYPos;
+      Move_flag = "no";
+      saveApp = true;
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 14" color="#5269cf">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 285" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="64.55" ty="124.95" a="0.995697021484375" d="1.0"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Play Mode";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.List(1,"yes");
+   _root.BakColor._x = _root.DockXPos;
+   _root.BakColor._y = _root.DockYPos;
+   _root.EditPal.BG_flag = "no";
+   _root.mp3loader._x = _root.DockXPos;
+   _root.mp3loader._y = _root.DockYPos;
+   _root.EditPal.MP3_flag = "no";
+   _root.LiveModeSetup();
+   _root.HelpWin._x = _root.DockXPos;
+   _root.HelpWin._y = _root.DockYPos;
+   Help_flag = "no";
+   _root.MoveScreen._x = _root.DockXPos;
+   _root.MoveScreen._y = root.DockXPos;
+   Move_flag = "no";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 15" color="#6fd4b5">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 281" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="39.7" ty="74.55"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Bk Color";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(BG_flag == "yes")
+   {
+      _root.BakColor._x = root.DockXPos;
+      _root.BakColor._y = root.DockYPos;
+      BG_flag = "no";
+   }
+   else
+   {
+      _root.BakColor._x = _root.EditPal._x + 85;
+      _root.BakColor._y = _root.EditPal._y + 50;
+      BG_flag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 16" color="#b421cf">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 278" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="64.7" ty="49.35"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Draw";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.callIbeam("Drw");
+   _root.IncNum();
+   _root.CleanUP();
+   delete _root.DotCleanUp();
+   _root.DrawStyle = "lines";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 17" color="#d297bf">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 276" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="64.7" ty="74.55"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Music";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   if(MP3_flag == "yes")
+   {
+      _root.mp3loader._x = root.DockXPos;
+      _root.mp3loader._y = root.DockYPos;
+      MP3_flag = "no";
+   }
+   else
+   {
+      _root.mp3loader._x = _root.EditPal._x + 85;
+      _root.mp3loader._y = _root.EditPal._y + 60;
+      MP3_flag = "yes";
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 18" color="#68f153">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 274" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="14.7" ty="74.55" a="0.9976348876953125" d="1.002166748046875"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Ruler";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.IncNum();
+   _root.LoadRuler();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 19" color="#aa4bd0">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 271" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="39.7" ty="49.35"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Media";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.callIbeam("MC");
+   _root.IncNum();
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 20" color="#bde06a">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 268" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="14.7" ty="49.35"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(rollOver){
+   this.tooltip = "Text";
+}
+on(rollOut){
+   this.tooltip = "";
+}
+on(release){
+   _root.IncNum();
+   _root.callIbeam("txt");
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 21" color="#fdfb67" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#999999"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="0.5">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 1574 190| 1574 3158| 14 3158| 14 190| 1574 190"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! 84 712| 1504 712"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>

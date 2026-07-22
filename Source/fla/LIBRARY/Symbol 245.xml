@@ -1,0 +1,191 @@
+<DOMSymbolItem xmlns="http://ns.adobe.com/xfl/2008/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Symbol 245" itemID="6a3c6600-000000d1" lastModified="1782343169" linkageIdentifier="welcomeBox" linkageExportForAS="true">
+     <timeline>
+          <DOMTimeline name="Symbol 245">
+               <layers>
+                    <DOMLayer name="Script Layer" color="#f0e6f2">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <Actionscript>
+                                        <script>function buttonPressed(buttonInstance)
+{
+   if(buttonInstance == nEWbTN)
+   {
+      _root.welcom_box._x = _root.DockXPos;
+      _root.welcom_box._y = _root.DockYPos;
+      _root.EditPal._x = 28.1;
+      _root.EditPal._y = 34.9;
+      _root.miniPlayer._x = -544.9;
+      _root.miniPlayer._y = 34.9;
+      _root.ClearMovie();
+   }
+   else if(buttonInstance == oPN_BTN)
+   {
+      _root.ClearMovie();
+      _root.welcom_box._x = _root.DockXPos;
+      _root.welcom_box._y = _root.DockYPos;
+      _root.LoadPrefs(Present_LB.getSelectedItem().label);
+   }
+}
+Present_LB.setStyleProperty("background",12770484);
+this.swapDepths(6410);
+</script>
+                                   </Actionscript>
+                                   <elements/>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 2" color="#da9857">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 244" symbolType="button">
+                                             <matrix>
+                                                  <Matrix tx="263.85" ty="8.1"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(release){
+   if(_root.EditPal.OpenWin == true)
+   {
+      _root.welcom_box._x = _root.DockXPos;
+      _root.welcom_box._y = _root.DockYPos;
+      _root.EditPal.OpenWin = false;
+      _root.editModeSetUP();
+   }
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 3" color="#78e654">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMDynamicText fontRenderingMode="device" width="157.2" height="18.05" isSelectable="false" lineType="multiline no wrap">
+                                             <matrix>
+                                                  <Matrix tx="2.45" ty="1.35"/>
+                                             </matrix>
+                                             <textRuns>
+                                                  <DOMTextRun>
+                                                       <characters>F L A S H   P O I N T&#13;</characters>
+                                                       <textAttrs>
+                                                            <DOMTextAttrs alignment="left" rotation="true" indent="0.0" leftMargin="0.0" lineSpacing="2.0" rightMargin="0.0" autoKern="false" size="0.0" bitmapSize="0" face="_sans" fillColor="#ffffff" alpha="1.0"/>
+                                                       </textAttrs>
+                                                  </DOMTextRun>
+                                             </textRuns>
+                                        </DOMDynamicText>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 4" color="#ac9899">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 239" name="oPN_BTN" centerPoint3DX="53.1" centerPoint3DY="68.65">
+                                             <matrix>
+                                                  <Matrix tx="3.1" ty="58.7"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "Open";
+   clickHandler = "buttonPressed";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 5" color="#54e2fa">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 239" name="nEWbTN" centerPoint3DX="53.1" centerPoint3DY="38.85">
+                                             <matrix>
+                                                  <Matrix tx="3.1" ty="28.9"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   label = "New";
+   clickHandler = "buttonPressed";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 6" color="#f54350">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="Symbol 235" name="Present_LB" centerPoint3DX="167.65" centerPoint3DY="76.05">
+                                             <matrix>
+                                                  <Matrix tx="117.65" ty="23.55" a="1.5" d="0.7139434814453125"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point/>
+                                             </transformationPoint>
+                                             <Actionscript>
+                                                  <script>on(initialize){
+   selectMultiple = false;
+   changeHandler = "";
+}
+</script>
+                                             </Actionscript>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+                    <DOMLayer name="Layer 7" color="#d081b8" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMShape isFloating="true">
+                                             <fills>
+                                                  <FillStyle index="1">
+                                                       <SolidColor color="#666666"/>
+                                                  </FillStyle>
+                                                  <FillStyle index="2">
+                                                       <SolidColor color="#333333"/>
+                                                  </FillStyle>
+                                             </fills>
+                                             <strokes>
+                                                  <StrokeStyle index="1">
+                                                       <SolidStroke scaleMode="normal" weight="1.0">
+                                                            <fill>
+                                                                 <SolidColor color="#000000"/>
+                                                            </fill>
+                                                       </SolidStroke>
+                                                  </StrokeStyle>
+                                             </strokes>
+                                             <edges>
+                                                  <Edge fillStyle0="0" fillStyle1="2" strokeStyle="1" edges="! -3 345| -3 -26| 5465 -26| 5465 380| 5464 380"/>
+                                                  <Edge fillStyle0="0" fillStyle1="1" strokeStyle="1" edges="! 5464 380| 5464 1895| -4 1895| -4 345| -3 345"/>
+                                                  <Edge fillStyle0="2" fillStyle1="1" strokeStyle="1" edges="! -3 345| -3 380| 5464 380"/>
+                                                  <Edge fillStyle0="1" fillStyle1="1" strokeStyle="1" edges="! 2229 519| 2229 1720"/>
+                                             </edges>
+                                        </DOMShape>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timeline>
+</DOMSymbolItem>
